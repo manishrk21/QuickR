@@ -104,11 +104,12 @@ export function MenuPageClient({ restaurant, categories, items, session, tableLa
         primaryColor={primaryColor} 
       />
 
-      <div className="sticky top-[57px] z-20 flex-col gap-2 border-b bg-white/95 p-2 backdrop-blur sm:flex sm:flex-row sm:flex-wrap sm:items-center overflow-x-auto no-scrollbar">
-        <div className="flex flex-wrap gap-2">
+      <div className="sticky top-[57px] z-20 border-b bg-white/95 p-2 backdrop-blur">
+        <div className="overflow-x-auto no-scrollbar">
+          <div className="flex min-w-max flex-nowrap gap-2">
           <button
             onClick={() => setActiveCategory("all")}
-            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+            className={`shrink-0 whitespace-nowrap rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
               activeCategory === "all" ? "text-white" : "bg-slate-100 text-slate-600"
             }`}
             style={{ backgroundColor: activeCategory === "all" ? primaryColor : undefined }}
@@ -119,7 +120,7 @@ export function MenuPageClient({ restaurant, categories, items, session, tableLa
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+              className={`shrink-0 whitespace-nowrap rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
                 activeCategory === cat.id ? "text-white" : "bg-slate-100 text-slate-600"
               }`}
               style={{ backgroundColor: activeCategory === cat.id ? primaryColor : undefined }}
@@ -127,6 +128,7 @@ export function MenuPageClient({ restaurant, categories, items, session, tableLa
               {cat.name}
             </button>
           ))}
+          </div>
         </div>
       </div>
 
