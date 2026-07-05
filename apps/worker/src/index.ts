@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { rateLimit } from 'express-rate-limit'
+import { rateLimit, ipKeyGenerator } from "express-rate-limit";
 import express from "express";
 import helmet from "helmet";
 // import rateLimit from "express-rate-limit";
@@ -27,18 +27,12 @@ app.use(
     standardHeaders: true,
     legacyHeaders: false,
     message: { error: "Too many requests." },
-    // Use real IP behind Render proxy
-    // keyGenerator: (req) =>
-    //   req.headers["x-forwarded-for"]?.toString().split(",")[0]?.trim() ??
-    //   req.ip ??
-    //   "unknown",
-    // keyGenerator: (req) => {
-    //   const clientIp = req.headers["x-forwarded-for"]?.toString().split(",")[0]?.trim() ?? req.ip ?? "unknown";
-    //   return ipKeyGenerator(clientIp);
     keyGenerator: (req) => {
-      return req.headers["x-forwarded-for"]?.toString().split(",")[0]?.trim() ?? 
-             req.ip ?? 
-             "unknown";
+      const ip =
+        req.headers["x-forwarded-for"]?.toString().split(",")[0]?.trim() ??
+        req.ip ??
+        "unknown";
+      return ipKeyGenerator(ip);
     },
   })
 );
