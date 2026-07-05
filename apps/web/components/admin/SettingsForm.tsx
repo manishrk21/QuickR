@@ -58,7 +58,7 @@ export function SettingsForm({ restaurant }: { restaurant: Restaurant }) {
 
   return (
     <form onSubmit={handleSave} className="space-y-6">
-      <Card>
+      <Card className="border-[#630102]/10 bg-[#EDEBDE] shadow-sm">
         <CardHeader>
           <CardTitle className="text-base">Restaurant info</CardTitle>
         </CardHeader>
@@ -93,7 +93,7 @@ export function SettingsForm({ restaurant }: { restaurant: Restaurant }) {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="border-[#630102]/10 bg-[#EDEBDE] shadow-sm">
         <CardHeader>
           <CardTitle className="text-base">Branding</CardTitle>
         </CardHeader>
@@ -115,14 +115,14 @@ export function SettingsForm({ restaurant }: { restaurant: Restaurant }) {
                 maxLength={7}
               />
             </div>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-[#630102]/45">
               Shown on your menu page. Default is green.
             </p>
           </div>
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="border-[#630102]/10 bg-[#EDEBDE] shadow-sm">
         <CardHeader>
           <CardTitle className="text-base">Loyalty program</CardTitle>
         </CardHeader>
@@ -139,7 +139,7 @@ export function SettingsForm({ restaurant }: { restaurant: Restaurant }) {
               value={form.loyalty_streak_target}
               onChange={(e) => set("loyalty_streak_target", Number(e.target.value))}
             />
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-[#630102]/45">
               Customers earn a reward after this many visits to your restaurant.
             </p>
           </div>
@@ -149,13 +149,13 @@ export function SettingsForm({ restaurant }: { restaurant: Restaurant }) {
       
 
       {error && (
-        <p className="text-sm text-red-600 bg-red-50 px-3 py-2 rounded-md">
+        <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-600">
           {error}
         </p>
       )}
 
       {success && (
-        <p className="text-sm text-green-700 bg-green-50 px-3 py-2 rounded-md">
+        <p className="rounded-md bg-green-50 px-3 py-2 text-sm text-green-700">
           Settings saved.
         </p>
       )}
