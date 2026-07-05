@@ -29,7 +29,7 @@ export function MenuItemForm({ categories, slug, initialData }: MenuItemFormProp
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState(initialData?.name ?? "");
   const [description, setDescription] = useState(initialData?.description ?? "");
-  const [priceStr, setPriceStr] = useState(initialData ? (initialData.price / 100).toString() : "");
+  const [priceStr, setPriceStr] = useState(initialData ? initialData.price.toString() : "");
   const [categoryId, setCategoryId] = useState(initialData?.category_id ?? categories[0]?.id ?? "");
   const [foodType, setFoodType] = useState<"veg" | "non_veg">(initialData?.food_type ?? "veg");
   const [allergens, setAllergens] = useState<string[]>(initialData?.allergens ?? []);
@@ -72,7 +72,7 @@ export function MenuItemForm({ categories, slug, initialData }: MenuItemFormProp
         imageUrl = uploadData.url;
       }
 
-      const rawPriceCents = Math.round(parseFloat(priceStr) * 100);
+      const rawPriceCents = parseFloat(priceStr);
       
       // If initialData exists, target the item ID route, otherwise target the base creation route
       const url = initialData ? `/api/admin/menu/${initialData.id}` : "/api/admin/menu";
