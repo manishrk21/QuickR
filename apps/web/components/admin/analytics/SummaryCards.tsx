@@ -22,7 +22,7 @@ function TrendBadge({ pct }: { pct: number | null }) {
 }
 
 export function SummaryCards({ summary, days }: SummaryCardsProps) {
-  if (!summary) return <div className="border-2 border-dashed border-slate-200 rounded-xl p-8 text-center text-slate-400 text-sm">No paid orders yet.</div>;
+  if (!summary) return <div className="rounded-2xl border border-dashed border-[#630102]/15 bg-[#EDEBDE] p-6 text-center text-sm text-[#630102]/50 sm:p-8">No paid orders yet.</div>;
   const revenuePct = pctChange(summary.period_revenue, summary.prev_revenue);
   const ordersPct = pctChange(summary.period_orders, summary.prev_orders);
   const cards = [
@@ -32,12 +32,12 @@ export function SummaryCards({ summary, days }: SummaryCardsProps) {
     { label: "Avg order value", value: `₹${Number(summary.avg_order_value).toFixed(0)}`, sub: `last ${days} days`, trend: null },
   ];
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
       {cards.map((card) => (
-        <div key={card.label} className="bg-white border border-slate-200 rounded-xl p-5">
-          <p className="text-xs text-slate-500 font-medium">{card.label}</p>
-          <p className="text-2xl font-bold text-slate-900 mt-1 mb-1">{card.value}</p>
-          <div className="text-xs text-slate-400">{typeof card.sub === "string" ? card.sub : card.sub}</div>
+        <div key={card.label} className="rounded-2xl border border-[#630102]/10 bg-[#EDEBDE] p-4 shadow-sm sm:p-5">
+          <p className="text-xs font-medium text-[#630102]/60">{card.label}</p>
+          <p className="mb-1 mt-1 text-2xl font-bold text-[#1a0000]">{card.value}</p>
+          <div className="text-xs text-[#630102]/45">{typeof card.sub === "string" ? card.sub : card.sub}</div>
         </div>
       ))}
     </div>
