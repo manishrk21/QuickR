@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { rateLimit, ipKeyGenerator } from 'express-rate-limit'
+import { rateLimit } from 'express-rate-limit'
 import express from "express";
 import helmet from "helmet";
 // import rateLimit from "express-rate-limit";
@@ -32,9 +32,13 @@ app.use(
     //   req.headers["x-forwarded-for"]?.toString().split(",")[0]?.trim() ??
     //   req.ip ??
     //   "unknown",
+    // keyGenerator: (req) => {
+    //   const clientIp = req.headers["x-forwarded-for"]?.toString().split(",")[0]?.trim() ?? req.ip ?? "unknown";
+    //   return ipKeyGenerator(clientIp);
     keyGenerator: (req) => {
-      const clientIp = req.headers["x-forwarded-for"]?.toString().split(",")[0]?.trim() ?? req.ip ?? "unknown";
-      return ipKeyGenerator(clientIp);
+      return req.headers["x-forwarded-for"]?.toString().split(",")[0]?.trim() ?? 
+             req.ip ?? 
+             "unknown";
     },
   })
 );
