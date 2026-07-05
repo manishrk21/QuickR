@@ -51,7 +51,7 @@ export async function POST(
 
   const remainingInstructions = currentInstructions
     .split("•")
-    .map((part) => part.trim())
+    .map((part: string) => part.trim())
     .filter((part) => part && part.toLowerCase() !== HELP_TEXT.toLowerCase())
     .join(" • ");
 
