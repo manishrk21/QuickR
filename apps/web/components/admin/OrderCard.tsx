@@ -59,7 +59,7 @@ const STATUS_BADGE: Record<OrderStatus, string> = {
 };
 
 const ITEM_STATUS_BADGE: Record<ItemStatus, string> = {
-  pending: "bg-slate-100 text-slate-500",
+  pending: "bg-[#630102]/[0.05] text-[#630102]/55",
   preparing: "bg-amber-100 text-amber-700",
   done: "bg-green-100 text-green-700",
 };
@@ -168,14 +168,14 @@ export function OrderCard({ order, onStatusChange, onItemStatusChange }: OrderCa
   const cardBorder =
     order.status === "pending"
       ? "border-amber-300 ring-1 ring-amber-200"
-      : "border-slate-200";
+      : "border-[#630102]/10";
 
   return (
-    <div className={`overflow-visible rounded-xl border bg-white shadow-sm ${cardBorder}`}>
-      <div className="flex items-start justify-between gap-2 border-b bg-slate-50 px-4 py-3">
+    <div className={`overflow-visible rounded-xl border bg-[#EDEBDE] shadow-sm ${cardBorder}`}>
+      <div className="flex items-start justify-between gap-2 border-b border-[#630102]/10 bg-[#630102]/[0.03] px-4 py-3">
         <div>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-sm font-bold text-slate-900">
+            <span className="text-sm font-bold text-[#1a0000]">
               {order.tables?.label ?? "Takeaway"}
             </span>
             <Badge className={`${STATUS_BADGE[order.status]} text-xs`}>
@@ -193,24 +193,24 @@ export function OrderCard({ order, onStatusChange, onItemStatusChange }: OrderCa
 
           <div className="mt-1 flex items-center gap-3">
             {(order.customers?.name || order.customers?.mobile) && (
-              <span className="flex items-center gap-1 text-xs text-slate-500">
+              <span className="flex items-center gap-1 text-xs text-[#630102]/55">
                 <User size={11} />
                 {order.customers?.name ?? order.customers?.mobile ?? "Customer"}
               </span>
             )}
-            <span className="flex items-center gap-1 text-xs text-slate-400">
+            <span className="flex items-center gap-1 text-xs text-[#630102]/40">
               <Clock size={11} />
               {timeAgo(order.created_at)}
             </span>
           </div>
         </div>
 
-        <span className="shrink-0 text-base font-bold text-slate-900">
+        <span className="shrink-0 text-base font-bold text-[#1a0000]">
           ₹{Number(order.total_amount).toFixed(0)}
         </span>
       </div>
 
-      <div className="divide-y divide-slate-50 px-4 py-2">
+      <div className="divide-y divide-[#630102]/8 px-4 py-2">
         {order.order_items.map((item) => (
           <div
             key={item.id}
@@ -219,18 +219,18 @@ export function OrderCard({ order, onStatusChange, onItemStatusChange }: OrderCa
             <FoodTypeIndicator type={item.food_type_snapshot as "veg" | "non_veg" | "egg"} size="sm" />
 
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium text-slate-800">
+              <p className="truncate text-sm font-medium text-[#1a0000]">
                 {item.name_snapshot}
                 {item.is_new_addition && (
                   <span className="ml-1.5 text-xs font-normal text-amber-600">↑ added later</span>
                 )}
               </p>
               {item.special_instructions && (
-                <p className="truncate text-xs text-slate-400">{item.special_instructions}</p>
+                <p className="truncate text-xs text-[#630102]/40">{item.special_instructions}</p>
               )}
             </div>
 
-            <span className="shrink-0 text-xs text-slate-500">×{item.quantity}</span>
+            <span className="shrink-0 text-xs text-[#630102]/55">×{item.quantity}</span>
 
             {(["accepted", "preparing"].includes(order.status)) && (
               <button
@@ -261,7 +261,7 @@ export function OrderCard({ order, onStatusChange, onItemStatusChange }: OrderCa
         <>
           <Separator />
           <div className="px-4 py-2">
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-[#630102]/45">
               <span className="font-medium">Note: </span>
               {order.special_instructions}
             </p>
@@ -272,9 +272,9 @@ export function OrderCard({ order, onStatusChange, onItemStatusChange }: OrderCa
       {order.status === "served" && (
         <>
           <Separator />
-          <div className="flex items-center gap-3 bg-slate-50 px-4 py-3">
-            <Utensils size={14} className="shrink-0 text-slate-400" />
-            <span className="text-xs text-slate-600">Payment method</span>
+          <div className="flex items-center gap-3 bg-[#630102]/[0.03] px-4 py-3">
+            <Utensils size={14} className="shrink-0 text-[#630102]/40" />
+            <span className="text-xs text-[#630102]/60">Payment method</span>
             <div
               ref={paymentRef}
               className="relative ml-auto"
@@ -284,14 +284,14 @@ export function OrderCard({ order, onStatusChange, onItemStatusChange }: OrderCa
               <button
                 type="button"
                 onClick={() => setPaymentOpen((prev) => !prev)}
-                className="flex h-8 w-36 items-center justify-between rounded-md border border-slate-200 bg-white px-2.5 text-xs text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+                className="flex h-8 w-36 items-center justify-between rounded-md border border-[#630102]/10 bg-[#EDEBDE] px-2.5 text-xs text-[#1a0000]/80 shadow-sm transition hover:border-[#630102]/20 hover:bg-[#630102]/[0.03]"
               >
                 <span className="truncate">{selectedPaymentLabel}</span>
                 <ChevronDown className={`h-3.5 w-3.5 transition-transform ${paymentOpen ? "rotate-180" : ""}`} />
               </button>
 
               {paymentOpen && (
-                <div className="absolute right-0 top-full z-50 mt-2 w-36 rounded-lg border border-slate-200 bg-white p-1 shadow-lg">
+                <div className="absolute right-0 top-full z-50 mt-2 w-36 rounded-lg border border-[#630102]/10 bg-[#EDEBDE] p-1 shadow-lg">
                   {[
                     { value: "cash", label: "Cash" },
                     { value: "upi", label: "UPI" },
@@ -307,8 +307,8 @@ export function OrderCard({ order, onStatusChange, onItemStatusChange }: OrderCa
                       }}
                       className={`flex w-full items-center rounded-md px-3 py-2 text-left text-sm transition ${
                         paymentMethod === option.value
-                          ? "bg-slate-100 font-medium text-slate-900"
-                          : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                          ? "bg-[#630102]/[0.06] font-medium text-[#1a0000]"
+                          : "text-[#630102]/60 hover:bg-[#630102]/[0.03] hover:text-[#1a0000]"
                       }`}
                     >
                       {option.label}
