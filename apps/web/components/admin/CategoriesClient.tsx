@@ -92,8 +92,8 @@ export function CategoriesClient({
   }
 
   return (
-    <div className="space-y-4">
-      <form onSubmit={handleCreate} className="flex gap-2">
+    <div className="space-y-4 rounded-2xl border border-[#630102]/10 bg-[#EDEBDE] p-4 shadow-sm sm:p-5">
+      <form onSubmit={handleCreate} className="flex flex-col gap-2 sm:flex-row">
         <Input
           placeholder="New category name"
           value={newName}
@@ -106,13 +106,11 @@ export function CategoriesClient({
         </Button>
       </form>
 
-      {error && (
-        <p className="text-sm text-red-600 bg-red-50 px-3 py-2 rounded-md">{error}</p>
-      )}
+      {error && <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-600">{error}</p>}
 
       {categories.length === 0 ? (
-        <div className="border-2 border-dashed border-slate-200 rounded-xl p-10 text-center">
-          <p className="text-slate-500 text-sm">No categories yet. Add one above.</p>
+        <div className="rounded-xl border-2 border-dashed border-[#630102]/15 p-10 text-center">
+          <p className="text-sm text-[#630102]/50">No categories yet. Add one above.</p>
         </div>
       ) : (
         <DragDropContext onDragEnd={handleDragEnd}>
@@ -121,7 +119,7 @@ export function CategoriesClient({
               <div
                 ref={provided.innerRef}
                 {...provided.droppableProps}
-                className="border rounded-xl overflow-hidden divide-y divide-slate-100"
+                className="overflow-hidden rounded-xl border border-[#630102]/10 divide-y divide-[#630102]/8"
               >
                 {categories.map((cat, index) => (
                   <Draggable key={cat.id} draggableId={cat.id} index={index}>
@@ -130,12 +128,12 @@ export function CategoriesClient({
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         style={{ ...provided.draggableProps.style, ...(snapshot.isDragging ? { zIndex: 1000 } : {}) }}
-                        className={`flex items-center gap-3 px-4 py-3 bg-white
-                          ${snapshot.isDragging ? "shadow-lg ring-1 ring-violet-200" : ""}`}
+                        className={`flex items-center gap-3 bg-[#EDEBDE] px-4 py-3
+                          ${snapshot.isDragging ? "shadow-lg ring-1 ring-[#630102]/15" : ""}`}
                       >
                         <span
                           {...provided.dragHandleProps}
-                          className="text-slate-300 hover:text-slate-500 cursor-grab active:cursor-grabbing"
+                          className="cursor-grab text-[#630102]/20 hover:text-[#630102]/50 active:cursor-grabbing"
                         >
                           <GripVertical size={16} />
                         </span>
@@ -148,11 +146,11 @@ export function CategoriesClient({
                               if (e.key === "Enter") handleRename(cat.id);
                               if (e.key === "Escape") setEditingId(null);
                             }}
-                            className="flex-1 h-8"
+                            className="h-8 flex-1"
                             autoFocus
                           />
                         ) : (
-                          <span className="flex-1 text-sm font-medium text-slate-900">
+                          <span className="flex-1 text-sm font-medium text-[#1a0000]">
                             {cat.name}
                           </span>
                         )}
@@ -163,7 +161,7 @@ export function CategoriesClient({
                               <Button
                                 size="icon"
                                 variant="ghost"
-                                className="h-7 w-7 text-green-600"
+                                className="h-7 w-7 text-green-700"
                                 onClick={() => handleRename(cat.id)}
                               >
                                 <Check size={14} />
@@ -171,7 +169,7 @@ export function CategoriesClient({
                               <Button
                                 size="icon"
                                 variant="ghost"
-                                className="h-7 w-7 text-slate-400"
+                                className="h-7 w-7 text-[#630102]/35"
                                 onClick={() => setEditingId(null)}
                               >
                                 <X size={14} />
@@ -182,7 +180,7 @@ export function CategoriesClient({
                               <Button
                                 size="icon"
                                 variant="ghost"
-                                className="h-7 w-7 text-slate-400 hover:text-slate-700"
+                                className="h-7 w-7 text-[#630102]/35 hover:text-[#630102]"
                                 onClick={() => {
                                   setEditingId(cat.id);
                                   setEditName(cat.name);
@@ -193,7 +191,7 @@ export function CategoriesClient({
                               <Button
                                 size="icon"
                                 variant="ghost"
-                                className="h-7 w-7 text-slate-400 hover:text-red-600"
+                                className="h-7 w-7 text-[#630102]/35 hover:text-red-600"
                                 onClick={() => handleDelete(cat.id, cat.name)}
                               >
                                 <Trash2 size={14} />
