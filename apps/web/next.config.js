@@ -33,7 +33,7 @@ const securityHeaders = [
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com data:",
       "font-src 'self' https://fonts.gstatic.com data:",
       "img-src 'self' data: blob: https://*.supabase.co",
-      `connect-src 'self' https://*.supabase.co wss://*.supabase.co ${process.env.NEXT_PUBLIC_WORKER_URL ?? "http://localhost:4000"} https://*.upstash.io https://emailjs.com`,
+      `connect-src 'self' https://*.supabase.co wss://*.supabase.co ${process.env.NEXT_PUBLIC_WORKER_URL ?? "http://localhost:4000"} https://*.upstash.io https://api.emailjs.com`,
       "frame-ancestors 'none'",
     ].join("; "),
   },
