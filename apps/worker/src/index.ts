@@ -12,9 +12,29 @@ const PORT = process.env.PORT || 4000;
 // Trust proxy (needed for Render deployment — gets real IP)
 app.set("trust proxy", 1);
 
-app.use(helmet({
-  crossOriginResourcePolicy: { policy: "same-site" },
-}));
+// app.use(helmet({
+//   crossOriginResourcePolicy: { policy: "same-site" },
+// }));
+// Modified Helmet configuration with customized Content Security Policy
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "same-site" },
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        connectSrc: [
+          "'self'",
+          "https://*.supabase.co",
+          "wss://*.supabase.co",
+          "https://onrender.com",
+          "https://*.upstash.io",
+          "https://emailjs.com", // 🟢 Added to allow EmailJS connections
+        ],
+      },
+    },
+  })
+);
+
 
 // Strict body size limit — prevents large payload attacks
 app.use(express.json({ limit: "16kb" }));
