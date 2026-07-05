@@ -96,10 +96,10 @@ export function CustomersClient({
   }
 
   return (
-    <div>
-      <div className="mb-6 flex gap-3">
-        <div className="relative max-w-sm flex-1">
-          <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+    <div className="space-y-5 rounded-2xl border border-[#630102]/10 bg-[#EDEBDE] p-4 shadow-sm sm:p-5">
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
+        <div className="relative w-full lg:max-w-sm lg:flex-1">
+          <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#630102]/35" />
           <Input
             placeholder="Search by name or mobile…"
             value={search}
@@ -109,7 +109,7 @@ export function CustomersClient({
         </div>
 
         <Select value={sort} onValueChange={setSort} openOnHover>
-          <SelectTrigger className="w-44">
+          <SelectTrigger className="w-full lg:w-44">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -122,81 +122,82 @@ export function CustomersClient({
         
       </div>
 
-      <div className="mb-6 grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         {[
           { label: "Total customers", value: customers.length },
           { label: "With active rewards", value: customers.filter((c) => c.has_reward).length },
           { label: "At full streak", value: customers.filter((c) => c.streak_progress === streakTarget - 1).length },
         ].map(({ label, value }) => (
-          <div key={label} className="rounded-lg border bg-white p-4">
-            <p className="text-xs text-slate-500">{label}</p>
-            <p className="mt-1 text-2xl font-bold text-slate-900">{value}</p>
+          <div key={label} className="rounded-xl border border-[#630102]/10 bg-[#EDEBDE] p-4">
+            <p className="text-xs text-[#630102]/55">{label}</p>
+            <p className="mt-1 text-2xl font-bold text-[#1a0000]">{value}</p>
           </div>
         ))}
       </div>
 
       {loading ? (
-        <div className="py-12 text-center text-sm text-slate-400">Searching…</div>
+        <div className="py-12 text-center text-sm text-[#630102]/45">Searching…</div>
       ) : customers.length === 0 ? (
-        <div className="rounded-xl border-2 border-dashed border-slate-200 py-12 text-center">
-          <p className="text-sm text-slate-400">No customers found.</p>
+        <div className="rounded-xl border-2 border-dashed border-[#630102]/15 py-12 text-center">
+          <p className="text-sm text-[#630102]/45">No customers found.</p>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-xl border bg-white">
-          <table className="w-full text-sm">
+        <div className="overflow-hidden rounded-xl border border-[#630102]/10 bg-[#EDEBDE]">
+          <div className="overflow-x-auto">
+          <table className="min-w-[860px] w-full text-sm">
             <thead>
-              <tr className="border-b bg-slate-50">
-                <th className="px-4 py-3 text-left font-medium text-slate-600">Customer</th>
-                <th className="px-4 py-3 text-left font-medium text-slate-600">Streak</th>
-                <th className="px-4 py-3 text-left font-medium text-slate-600">Orders</th>
-                <th className="px-4 py-3 text-left font-medium text-slate-600">Total spent</th>
-                <th className="px-4 py-3 text-left font-medium text-slate-600">Last visit</th>
-                <th className="px-4 py-3 text-left font-medium text-slate-600">Reward</th>
+              <tr className="border-b border-[#630102]/10 bg-[#630102]/[0.03]">
+                <th className="px-4 py-3 text-left font-medium text-[#630102]/70">Customer</th>
+                <th className="px-4 py-3 text-left font-medium text-[#630102]/70">Streak</th>
+                <th className="px-4 py-3 text-left font-medium text-[#630102]/70">Orders</th>
+                <th className="px-4 py-3 text-left font-medium text-[#630102]/70">Total spent</th>
+                <th className="px-4 py-3 text-left font-medium text-[#630102]/70">Last visit</th>
+                <th className="px-4 py-3 text-left font-medium text-[#630102]/70">Reward</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-[#630102]/8">
               {customers.map((customer) => {
                 const display = getCustomerDisplay(customer);
 
                 return (
                   <tr
                     key={customer.id}
-                    className="cursor-pointer transition-colors hover:bg-slate-50"
+                    className="cursor-pointer transition-colors hover:bg-[#630102]/[0.03]"
                     onClick={() => setSelectedCustomer(customer)}
                   >
                     <td className="px-4 py-3">
-                      <p className="font-medium text-slate-900">{display.primary}</p>
-                      <p className="text-xs text-slate-400">{display.secondary}</p>
+                      <p className="font-medium text-[#1a0000]">{display.primary}</p>
+                      <p className="text-xs text-[#630102]/40">{display.secondary}</p>
                     </td>
 
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-1.5">
-                      <Flame size={13} className={customer.streak_progress > 0 ? "text-orange-400" : "text-slate-300"} />
-                      <span className="text-sm text-slate-700">{customer.streak_progress}/{streakTarget}</span>
+                      <Flame size={13} className={customer.streak_progress > 0 ? "text-orange-500" : "text-[#630102]/20"} />
+                      <span className="text-sm text-[#1a0000]/80">{customer.streak_progress}/{streakTarget}</span>
                     </div>
-                    <div className="mt-1 h-1 w-16 overflow-hidden rounded-full bg-slate-100">
+                    <div className="mt-1 h-1 w-16 overflow-hidden rounded-full bg-[#630102]/10">
                       <div
-                        className="h-full rounded-full bg-orange-400 transition-all"
+                        className="h-full rounded-full bg-[#630102] transition-all"
                         style={{ width: `${(customer.streak_progress / streakTarget) * 100}%` }}
                       />
                     </div>
                   </td>
 
-                  <td className="px-4 py-3 text-slate-700">{customer.total_orders}</td>
-                  <td className="px-4 py-3 font-medium text-slate-800">₹{Number(customer.total_spent).toFixed(0)}</td>
-                  <td className="px-4 py-3 text-xs text-slate-500">
+                  <td className="px-4 py-3 text-[#1a0000]/80">{customer.total_orders}</td>
+                  <td className="px-4 py-3 font-medium text-[#1a0000]">₹{Number(customer.total_spent).toFixed(0)}</td>
+                  <td className="px-4 py-3 text-xs text-[#630102]/45">
                     {customer.last_visit
                       ? new Date(customer.last_visit).toLocaleDateString("en-IN", { day: "numeric", month: "short" })
                       : "Never"}
                   </td>
                     <td className="px-4 py-3">
                       {customer.has_reward ? (
-                        <Badge className="gap-1 bg-violet-100 text-violet-700 hover:bg-violet-100">
+                        <Badge className="gap-1 bg-[#630102]/10 text-[#630102] hover:bg-[#630102]/10">
                           <Gift size={10} />
                           Unredeemed
                         </Badge>
                       ) : (
-                        <span className="text-xs text-slate-300">—</span>
+                        <span className="text-xs text-[#630102]/25">—</span>
                       )}
                     </td>
                   </tr>
@@ -204,6 +205,7 @@ export function CustomersClient({
               })}
             </tbody>
           </table>
+          </div>
         </div>
       )}
 
