@@ -21,8 +21,8 @@ function formatRevenue(value: number): string {
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-white border border-slate-200 rounded-lg px-3 py-2 shadow-lg text-xs">
-      <p className="font-semibold text-slate-700 mb-1">{label}</p>
+    <div className="rounded-lg border border-[#630102]/10 bg-[#EDEBDE] px-3 py-2 text-xs shadow-lg">
+      <p className="mb-1 font-semibold text-[#1a0000]">{label}</p>
       {payload.map((entry: any) => (
         <p key={entry.dataKey} style={{ color: entry.color }}>{entry.name}: {entry.dataKey === "revenue" ? `₹${Number(entry.value).toFixed(0)}` : entry.value}</p>
       ))}
@@ -36,15 +36,16 @@ export function RevenueChart({ data, days }: RevenueChartProps) {
   const tickInterval = days <= 7 ? 0 : days <= 30 ? 4 : 9;
 
   return (
-    <div className="bg-white border border-slate-200 rounded-xl p-5">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-sm font-semibold text-slate-800">{view === "revenue" ? "Daily revenue" : "Orders per day"}</h2>
-        <div className="flex gap-1">
+    <div className="rounded-2xl border border-[#630102]/10 bg-[#EDEBDE] p-4 shadow-sm sm:p-5">
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <h2 className="text-sm font-semibold text-[#1a0000]">{view === "revenue" ? "Daily revenue" : "Orders per day"}</h2>
+        <div className="flex flex-wrap gap-1">
           <Button size="sm" variant={view === "revenue" ? "default" : "outline"} className="text-xs h-7" onClick={() => setView("revenue")}>Revenue</Button>
           <Button size="sm" variant={view === "orders" ? "default" : "outline"} className="text-xs h-7" onClick={() => setView("orders")}>Orders</Button>
         </div>
       </div>
-      <ResponsiveContainer width="100%" height={220}>
+      <div className="h-64 w-full sm:h-72">
+      <ResponsiveContainer width="100%" height="100%">
         {view === "revenue" ? (
           <AreaChart data={chartData} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
             <defs><linearGradient id="revenueGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor="#7c3aed" stopOpacity={0.15} /><stop offset="95%" stopColor="#7c3aed" stopOpacity={0} /></linearGradient></defs>
@@ -64,6 +65,7 @@ export function RevenueChart({ data, days }: RevenueChartProps) {
           </BarChart>
         )}
       </ResponsiveContainer>
+      </div>
     </div>
   );
 }
