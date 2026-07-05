@@ -52,7 +52,7 @@ export async function POST(
   const remainingInstructions = currentInstructions
     .split("•")
     .map((part: string) => part.trim())
-    .filter((part) => part && part.toLowerCase() !== HELP_TEXT.toLowerCase())
+    .filter((part: string) => part && part.toLowerCase() !== HELP_TEXT.toLowerCase())
     .join(" • ");
 
   const isHelpOnly = Number(order.total_amount) === 0;
