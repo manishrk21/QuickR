@@ -124,7 +124,7 @@ export function MenuItemsClient({ initialItems, categories, slug }: MenuItemsCli
                         </div>
                       </td>
                       <td className="max-w-[120px] truncate px-4 py-4 text-[#630102]/50 sm:px-6">{catName}</td>
-                      <td className="whitespace-nowrap px-4 py-4 font-mono sm:px-6">${Number(item.price).toFixed(2)}</td>
+                      <td className="whitespace-nowrap px-4 py-4 font-mono sm:px-6">{Number(item.price).toFixed(2)}</td>
                       <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
                         <button
                           onClick={() => toggleStatus(item.id, item.status)}
