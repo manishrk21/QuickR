@@ -28,7 +28,7 @@ app.use(
           "wss://*.supabase.co",
           "https://onrender.com",
           "https://*.upstash.io",
-          "https://emailjs.com", // 🟢 Added to allow EmailJS connections
+          "https://api.emailjs.com", // 🟢 Added to allow EmailJS connections
         ],
       },
     },
