@@ -143,7 +143,7 @@ export function CustomerDetailDrawer({
             {displayCustomer.name ?? displayCustomer.mobile ?? "Customer"}
           </SheetTitle>
           {displayCustomer.mobile && (
-            <p className="-mt-1 flex items-center gap-1.5 text-sm text-slate-500">
+            <p className="-mt-1 flex items-center gap-1.5 text-sm text-[#630102]/50">
               <Phone size={12} />
               {displayCustomer.mobile}
             </p>
@@ -158,20 +158,20 @@ export function CustomerDetailDrawer({
                 { icon: null, label: "Spent", value: `₹${Number(customer.total_spent).toFixed(0)}` },
                 { icon: Flame, label: "Visits", value: data?.visitCount ?? "…" },
               ].map(({ icon: Icon, label, value }) => (
-                <div key={label} className="rounded-lg border p-3 text-center">
-                  <p className="text-xs text-slate-500">{label}</p>
-                  <p className="mt-0.5 text-lg font-bold text-slate-900">{value}</p>
+                <div key={label} className="rounded-lg border border-[#630102]/10 bg-[#EDEBDE] p-3 text-center">
+                  <p className="text-xs text-[#630102]/50">{label}</p>
+                  <p className="mt-0.5 text-lg font-bold text-[#1a0000]">{value}</p>
                 </div>
               ))}
             </div>
 
-            <div className="rounded-xl border p-4">
+            <div className="rounded-xl border border-[#630102]/10 bg-[#EDEBDE] p-4">
               <div className="mb-3 flex items-center justify-between">
-                <p className="flex items-center gap-1.5 text-sm font-semibold text-slate-800">
+                <p className="flex items-center gap-1.5 text-sm font-semibold text-[#1a0000]">
                   <Flame size={14} className="text-orange-400" />
                   Loyalty streak
                 </p>
-                {loading ? <Skeleton className="h-4 w-12" /> : <span className="text-sm font-bold text-slate-700">{data?.streakProgress ?? 0}/{streakTarget}</span>}
+                {loading ? <Skeleton className="h-4 w-12" /> : <span className="text-sm font-bold text-[#1a0000]">{data?.streakProgress ?? 0}/{streakTarget}</span>}
               </div>
 
               <div className="flex flex-wrap gap-2">
@@ -189,7 +189,7 @@ export function CustomerDetailDrawer({
               </div>
 
               {data && (
-                <p className="mt-2 text-xs text-slate-400">
+                <p className="mt-2 text-xs text-[#630102]/40">
                   {data.streakProgress === 0
                     ? "No visits in current cycle"
                     : data.streakProgress === streakTarget - 1
@@ -201,20 +201,20 @@ export function CustomerDetailDrawer({
 
             {(customer.has_reward || unredeemedRewards.length > 0) && (
               <div>
-                <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Pending rewards</p>
+                <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-[#630102]/55">Pending rewards</p>
                 <div className="space-y-2">
                   {loading ? [1, 2].map((i) => <Skeleton key={i} className="h-14 w-full" />) : unredeemedRewards.map((reward) => (
-                    <div key={reward.id} className="flex items-center justify-between rounded-xl border border-violet-200 bg-violet-50 px-4 py-3">
+                    <div key={reward.id} className="flex items-center justify-between rounded-xl border border-[#630102]/10 bg-[#630102]/[0.03] px-4 py-3">
                       <div className="flex items-center gap-2">
-                        <Gift size={16} className="text-violet-500" />
+                        <Gift size={16} className="text-[#630102]" />
                         <div>
-                          <p className="text-sm font-medium text-violet-800">Streak reward</p>
-                          <p className="text-xs text-violet-500">
+                          <p className="text-sm font-medium text-[#1a0000]">Streak reward</p>
+                          <p className="text-xs text-[#630102]/45">
                             Earned {new Date(reward.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}
                           </p>
                         </div>
                       </div>
-                      <Button size="sm" variant="outline" className="border-violet-300 text-xs text-violet-700 hover:bg-violet-100" disabled={redeemLoading === reward.id} onClick={() => handleRedeem(reward.id)}>
+                      <Button size="sm" variant="outline" className="border-[#630102]/15 text-xs text-[#630102] hover:bg-[#630102]/[0.03]" disabled={redeemLoading === reward.id} onClick={() => handleRedeem(reward.id)}>
                         {redeemLoading === reward.id ? "Redeeming…" : "Mark redeemed"}
                       </Button>
                     </div>
@@ -228,12 +228,12 @@ export function CustomerDetailDrawer({
 
 
               <div>
-                <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Redeemed rewards</p>
+                <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-[#630102]/55">Redeemed rewards</p>
                 <div className="space-y-1">
                   {redeemedRewards.map((reward) => (
-                    <div key={reward.id} className="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2">
-                      <span className="text-xs text-slate-500">Streak reward</span>
-                      <span className="text-xs text-slate-400">
+                    <div key={reward.id} className="flex items-center justify-between rounded-lg bg-[#630102]/[0.03] px-3 py-2">
+                      <span className="text-xs text-[#630102]/55">Streak reward</span>
+                      <span className="text-xs text-[#630102]/35">
                         Redeemed {reward.redeemed_at ? new Date(reward.redeemed_at).toLocaleDateString("en-IN", { day: "numeric", month: "short" }) : "—"}
                       </span>
                     </div>
@@ -245,7 +245,7 @@ export function CustomerDetailDrawer({
             <Separator />
 
             <div>
-              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Recent orders</p>
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-[#630102]/55">Recent orders</p>
               {loading ? (
                 <div className="space-y-2">
                   {[1, 2, 3].map((i) => <Skeleton key={i} className="h-12 w-full" />)}
@@ -253,22 +253,22 @@ export function CustomerDetailDrawer({
               ) : orders.length === 0 ? (
               
 
-                <p className="text-sm text-slate-400">No orders yet.</p>
+                <p className="text-sm text-[#630102]/45">No orders yet.</p>
               ) : (
                 <div className="space-y-2">
                   {orders.map((order) => (
-                    <div key={order.id} className="flex items-center justify-between rounded-lg border border-slate-100 px-3 py-2.5">
+                    <div key={order.id} className="flex items-center justify-between rounded-lg border border-[#630102]/10 bg-[#630102]/[0.02] px-3 py-2.5">
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="text-xs font-mono text-slate-400">#{order.id.slice(0, 6).toUpperCase()}</span>
-                          {order.tables?.label && <span className="text-xs text-slate-500">{order.tables.label}</span>}
+                          <span className="text-xs font-mono text-[#630102]/40">#{order.id.slice(0, 6).toUpperCase()}</span>
+                          {order.tables?.label && <span className="text-xs text-[#630102]/45">{order.tables.label}</span>}
                         </div>
-                        <p className="mt-0.5 text-xs text-slate-400">
+                        <p className="mt-0.5 text-xs text-[#630102]/35">
                           {new Date(order.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
                         </p>
                       </div>
                       <div className="text-right">
-                        <p className="text-sm font-semibold text-slate-800">₹{Number(order.total_amount).toFixed(0)}</p>
+                        <p className="text-sm font-semibold text-[#1a0000]">₹{Number(order.total_amount).toFixed(0)}</p>
                         <Badge className={`mt-0.5 text-xs ${ORDER_STATUS_BADGE[order.status] ?? ""}`}>{order.status}</Badge>
                       </div>
                     </div>
@@ -278,13 +278,13 @@ export function CustomerDetailDrawer({
             </div>
 
             <div>
-              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Visit history</p>
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-[#630102]/55">Visit history</p>
               {loading ? <Skeleton className="h-20 w-full" /> : visits.length === 0 ? (
-                <p className="text-sm text-slate-400">No visits recorded yet.</p>
+                <p className="text-sm text-[#630102]/45">No visits recorded yet.</p>
               ) : (
                 <div className="flex flex-wrap gap-1.5">
                   {visits.slice(0, 30).map((visit) => (
-                    <span key={visit.id} className="flex items-center gap-1 rounded-md bg-slate-100 px-2 py-1 text-xs text-slate-600">
+                    <span key={visit.id} className="flex items-center gap-1 rounded-md bg-[#630102]/[0.03] px-2 py-1 text-xs text-[#630102]/60">
                       <Calendar size={10} />
                       {new Date(visit.visit_date).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}
                     </span>
