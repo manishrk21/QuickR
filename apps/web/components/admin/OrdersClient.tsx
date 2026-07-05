@@ -118,14 +118,14 @@ function FilterDropdown({
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
-        className="flex w-full items-center justify-between rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+        className="flex w-full items-center justify-between rounded-md border border-[#630102]/10 bg-[#EDEBDE] px-3 py-2 text-sm text-[#1a0000]/80 shadow-sm transition hover:border-[#630102]/20 hover:bg-[#630102]/[0.03]"
       >
         <span className="truncate">{selected?.label ?? label}</span>
         <ChevronDown className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
 
       {open && (
-        <div className="absolute left-0 top-full z-50 mt-2 w-full rounded-lg border border-slate-200 bg-white p-1 shadow-lg">
+        <div className="absolute left-0 top-full z-50 mt-2 w-full rounded-lg border border-[#630102]/10 bg-[#EDEBDE] p-1 shadow-lg">
           {options.map((option) => (
             <button
               key={option.value}
@@ -136,8 +136,8 @@ function FilterDropdown({
               }}
               className={`flex w-full items-center rounded-md px-3 py-2 text-left text-sm transition ${
                 option.value === value
-                  ? "bg-slate-100 font-medium text-slate-900"
-                  : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                    ? "bg-[#630102]/[0.06] font-medium text-[#1a0000]"
+                    : "text-[#630102]/60 hover:bg-[#630102]/[0.03] hover:text-[#1a0000]"
               }`}
             >
               {option.label}
@@ -361,8 +361,8 @@ export function OrdersClient({
   }
 
   return (
-    <div>
-      <div className="mb-6 flex flex-wrap items-center gap-3">
+    <div className="space-y-4 rounded-2xl border border-[#630102]/10 bg-[#EDEBDE] p-4 shadow-sm sm:p-5">
+      <div className="flex flex-col gap-3 lg:flex-row lg:flex-wrap lg:items-center">
         <FilterDropdown
           label="Filter by status"
           value={filterStatus}
@@ -377,20 +377,20 @@ export function OrdersClient({
           onValueChange={setFilterTable}
         />
 
-        <div className="ml-auto flex items-center gap-1.5">
+        <div className="ml-0 flex items-center gap-1.5 lg:ml-auto">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
           </span>
-          <span className="text-xs text-slate-500">Live</span>
+          <span className="text-xs text-[#630102]/50">Live</span>
         </div>
 
         <button
           onClick={() => setSoundEnabled((value) => !value)}
           className={`rounded-md border px-3 py-1.5 text-xs transition-colors ${
             soundEnabled
-              ? "border-slate-200 text-slate-600 hover:bg-slate-50"
-              : "border-slate-200 text-slate-400 line-through"
+              ? "border-[#630102]/10 text-[#1a0000]/70 hover:bg-[#630102]/[0.03]"
+              : "border-[#630102]/10 text-[#630102]/35 line-through"
           }`}
           title={soundEnabled ? "Mute order sounds" : "Unmute order sounds"}
         >
@@ -399,7 +399,7 @@ export function OrdersClient({
       </div>
 
       {pendingCount > 0 && (
-        <div className="mb-4 flex items-center justify-between rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
+        <div className="flex items-center justify-between rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
           <p className="text-sm font-medium text-amber-800">
             {pendingCount} order{pendingCount > 1 ? "s" : ""} waiting for acceptance
           </p>
@@ -410,7 +410,7 @@ export function OrdersClient({
       )}
 
       {helpOrders.length > 0 && (
-        <div className="mb-4 space-y-2">
+        <div className="space-y-2">
           {helpOrders.map((order) => (
             <div
               key={order.id}
@@ -436,8 +436,8 @@ export function OrdersClient({
       )}
 
       {filtered.length === 0 ? (
-        <div className="rounded-xl border-2 border-dashed border-slate-200 py-16 text-center">
-          <p className="text-sm text-slate-400">
+        <div className="rounded-xl border-2 border-dashed border-[#630102]/15 py-16 text-center">
+          <p className="text-sm text-[#630102]/45">
             {orders.length === 0
               ? "No orders yet."
               : "No orders match the current filter."}
