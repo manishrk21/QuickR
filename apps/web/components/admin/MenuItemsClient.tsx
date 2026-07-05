@@ -64,9 +64,9 @@ export function MenuItemsClient({ initialItems, categories, slug }: MenuItemsCli
 
   if (items.length === 0) {
     return (
-      <div className="text-center py-12 px-4 border-2 border-dashed border-slate-200 rounded-xl bg-white mx-auto max-w-xl">
-        <h3 className="text-slate-700 font-medium">No menu items yet</h3>
-        <p className="text-slate-400 text-sm mt-1 mb-4">Get started by creating your first dish entry.</p>
+      <div className="mx-auto max-w-xl rounded-xl border-2 border-dashed border-[#630102]/15 bg-[#EDEBDE] px-4 py-12 text-center">
+        <h3 className="font-medium text-[#1a0000]">No menu items yet</h3>
+        <p className="mb-4 mt-1 text-sm text-[#630102]/45">Get started by creating your first dish entry.</p>
         <Button asChild className="w-full sm:w-auto">
           <Link href={`/admin/${slug}/menu/new`}>Add your first item</Link>
         </Button>
@@ -77,21 +77,21 @@ export function MenuItemsClient({ initialItems, categories, slug }: MenuItemsCli
   return (
     <div className="space-y-4 w-full max-w-full overflow-hidden">
       <div className="relative w-full sm:max-w-xs px-1 sm:px-0">
-        <Search className="absolute left-4 sm:left-3 top-1/2 -translate-y-1/2 text-slate-400 h-4 w-4" />
+        <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#630102]/35 sm:left-3" />
         <input
           type="text"
           placeholder="Search items by name..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full pl-10 sm:pl-9 pr-4 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900 transition-all"
+          className="w-full rounded-xl border border-[#630102]/15 py-2 pl-10 pr-4 text-sm transition-all focus:border-[#630102] focus:outline-none focus:ring-2 focus:ring-[#630102]/10 sm:pl-9"
         />
       </div>
 
-      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm w-full">
-        <div className="w-full overflow-x-auto scrollbar-thin">
+      <div className="w-full overflow-hidden rounded-xl border border-[#630102]/10 bg-[#EDEBDE] shadow-sm">
+        <div className="w-full overflow-x-auto">
           <table className="w-full min-w-[600px] text-left border-collapse table-auto">
             <thead>
-              <tr className="bg-slate-50 border-b border-slate-200 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              <tr className="border-b border-[#630102]/10 bg-[#630102]/[0.03] text-xs font-semibold uppercase tracking-wider text-[#630102]/60">
                 <th className="px-4 sm:px-6 py-4 whitespace-nowrap w-[40%]">Item Details</th>
                 <th className="px-4 sm:px-6 py-4 whitespace-nowrap w-[20%]">Category</th>
                 <th className="px-4 sm:px-6 py-4 whitespace-nowrap w-[15%]">Price</th>
@@ -99,51 +99,51 @@ export function MenuItemsClient({ initialItems, categories, slug }: MenuItemsCli
                 <th className="px-4 sm:px-6 py-4 text-right whitespace-nowrap w-[10%]">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 text-sm text-slate-700">
+            <tbody className="divide-y divide-[#630102]/8 text-sm text-[#1a0000]/80">
               {filteredItems.length > 0 ? (
                 filteredItems.map((item) => {
                   const catName = categories.find(c => c.id === item.category_id)?.name ?? "Unassigned";
                   return (
-                    <tr key={item.id} className="hover:bg-slate-50/50 transition-colors">
+                    <tr key={item.id} className="transition-colors hover:bg-[#630102]/[0.03]">
                       <td className="px-4 sm:px-6 py-4">
                         <div className="flex items-center gap-3">
                           {item.image_url ? (
                             <img 
                               src={item.image_url} 
                               alt={item.name} 
-                              className="h-12 w-12 rounded-lg object-cover bg-slate-50 border border-slate-200 flex-shrink-0"
+                              className="h-12 w-12 flex-shrink-0 rounded-lg border border-[#630102]/10 bg-[#630102]/[0.03] object-cover"
                             />
                           ) : (
-                            <div className="h-12 w-12 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center text-xl flex-shrink-0 select-none">
+                            <div className="flex h-12 w-12 flex-shrink-0 select-none items-center justify-center rounded-lg border border-[#630102]/10 bg-[#630102]/[0.03] text-xl">
                               🥣
                             </div>
                           )}
-                          <div className="truncate font-medium text-slate-900">
+                          <div className="truncate font-medium text-[#1a0000]">
                             {item.name}
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 sm:px-6 py-4 text-slate-500 max-w-[120px] truncate">{catName}</td>
-                      <td className="px-4 sm:px-6 py-4 font-mono whitespace-nowrap">${(item.price / 100).toFixed(2)}</td>
+                      <td className="max-w-[120px] truncate px-4 py-4 text-[#630102]/50 sm:px-6">{catName}</td>
+                      <td className="whitespace-nowrap px-4 py-4 font-mono sm:px-6">${(item.price / 100).toFixed(2)}</td>
                       <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
                         <button
                           onClick={() => toggleStatus(item.id, item.status)}
                           className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border transition-colors select-none ${
                             item.status === "available"
-                              ? "bg-emerald-50 border-emerald-200 text-emerald-700"
-                              : "bg-slate-100 border-slate-200 text-slate-600"
+                              ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                              : "border-[#630102]/10 bg-[#630102]/[0.04] text-[#630102]/55"
                           }`}
                         >
                           {item.status === "available" ? "Available" : "Sold out"}
                         </button>
                       </td>
                       <td className="px-4 sm:px-6 py-4 text-right space-x-1 sm:space-x-2 whitespace-nowrap">
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-500 hover:text-slate-900" asChild>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-[#630102]/45 hover:text-[#630102]" asChild>
                           <Link href={`/admin/${slug}/menu/${item.id}`}>
                             <Pencil size={14} />
                           </Link>
                         </Button>
-                        <Button variant="ghost" size="icon" onClick={() => deleteItem(item.id)} className="h-8 w-8 text-rose-500 hover:text-rose-700 hover:bg-rose-50">
+                        <Button variant="ghost" size="icon" onClick={() => deleteItem(item.id)} className="h-8 w-8 text-rose-500 hover:bg-rose-50 hover:text-rose-700">
                           <Trash2 size={14} />
                         </Button>
                       </td>
@@ -152,7 +152,7 @@ export function MenuItemsClient({ initialItems, categories, slug }: MenuItemsCli
                 })
               ) : (
                 <tr>
-                  <td colSpan={5} className="px-6 py-8 text-center text-slate-400 text-sm">
+                  <td colSpan={5} className="px-6 py-8 text-center text-sm text-[#630102]/45">
                     No items match "{searchQuery}"
                   </td>
                 </tr>
