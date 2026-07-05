@@ -33,19 +33,19 @@ export function AnalyticsClient({ initialData, restaurantId, defaultDays }: Anal
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-2">
+    <div className="space-y-5 sm:space-y-6">
+      <div className="flex flex-wrap items-center gap-2">
         {DAY_OPTIONS.map((opt) => (
           <Button key={opt.value} size="sm" variant={days === opt.value ? "default" : "outline"} onClick={() => handleDaysChange(opt.value)} disabled={isPending} className="text-xs">
             {opt.label}
           </Button>
         ))}
-        {isPending && <span className="text-xs text-slate-400 ml-2 animate-pulse">Loading…</span>}
+        {isPending && <span className="ml-1 animate-pulse text-xs text-[#630102]/50">Loading…</span>}
       </div>
 
-      {isPending ? <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">{[1, 2, 3, 4].map((i) => <Skeleton key={i} className="h-24 rounded-xl" />)}</div> : <SummaryCards summary={data.summary} days={days} />}
-      <div className="grid grid-cols-1 gap-4">{isPending ? <Skeleton className="h-64 rounded-xl" /> : <RevenueChart data={data.daily} days={days} />}</div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">{isPending ? <><Skeleton className="h-80 rounded-xl" /><Skeleton className="h-80 rounded-xl" /></> : <><TopItemsTable items={data.topItems} /><PeakHoursHeatmap data={data.peakHours} /></>}</div>
+      {isPending ? <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">{[1, 2, 3, 4].map((i) => <Skeleton key={i} className="h-24 rounded-2xl border border-[#630102]/10 bg-[#EDEBDE]" />)}</div> : <SummaryCards summary={data.summary} days={days} />}
+      <div className="grid grid-cols-1 gap-4">{isPending ? <Skeleton className="h-72 rounded-2xl border border-[#630102]/10 bg-[#EDEBDE]" /> : <RevenueChart data={data.daily} days={days} />}</div>
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">{isPending ? <><Skeleton className="h-80 rounded-2xl border border-[#630102]/10 bg-[#EDEBDE]" /><Skeleton className="h-80 rounded-2xl border border-[#630102]/10 bg-[#EDEBDE]" /></> : <><TopItemsTable items={data.topItems} /><PeakHoursHeatmap data={data.peakHours} /></>}</div>
     </div>
   );
 }
