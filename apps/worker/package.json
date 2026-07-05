@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "build": "tsup src/index.ts --format esm --clean --out-dir dist --target node",
+    "build": "tsup src/index.ts --format esm --clean --out-dir dist --target node24",
     "start": "node dist/index.js"
   },
   "dependencies": {
