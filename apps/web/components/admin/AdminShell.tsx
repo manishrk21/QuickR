@@ -14,14 +14,14 @@ export default function AdminShell({ children, slug, restaurantName }: {
   return (
     <div className="min-h-screen">
       {/* Top nav */}
-      <header className="fixed left-0 top-0 right-0 z-40 bg-white border-b border-slate-200 lg:pl-60">
+      <header className="fixed left-0 top-0 right-0 z-40 border-b border-[#630102]/10 bg-[#EDEBDE]/95 backdrop-blur lg:pl-60">
         <div className="mx-auto  px-4 sm:px-6 lg:px-8">
           <div className="h-14 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setOpen(true)}
                 aria-label="Open menu"
-                className="lg:hidden p-2 rounded-md hover:bg-slate-100"
+                className="rounded-md p-2 hover:bg-[#630102]/5 lg:hidden"
               >
                 ≡
               </button>
@@ -29,7 +29,7 @@ export default function AdminShell({ children, slug, restaurantName }: {
             </div>
             <div className="text-center font-bold">QuickR</div>
             <div className="flex items-center gap-3">
-              <button className="hidden lg:inline-flex p-2 rounded-md hover:bg-slate-100">
+              <button className="hidden rounded-md p-2 hover:bg-[#630102]/5 lg:inline-flex">
                 <LogOut size={16} />
               </button>
             </div>
@@ -47,8 +47,8 @@ export default function AdminShell({ children, slug, restaurantName }: {
       )}
 
       {/* Main content area; on lg keep left margin for sidebar */}
-      <main className="pt-14 bg-slate-50 min-h-screen lg:ml-60">
-        <div className="p-8">{children}</div>
+      <main className="min-h-screen bg-[#EDEBDE] pt-14 lg:ml-60">
+        <div className="px-4 py-6 sm:px-6 lg:px-8 lg:py-8">{children}</div>
       </main>
     </div>
   );
