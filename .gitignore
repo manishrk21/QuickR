@@ -1,0 +1,22 @@
+# Dependencies
+node_modules
+.pnpm-debug.log
+.pnp
+.pnp.js
+
+# Next.js build outputs
+.next/
+out/
+
+# Production builds
+dist/
+build/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Local environment secrets
+.env*.local
+.env.local
+.vercel

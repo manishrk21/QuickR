@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* shadcn light tokens (used in content area) */
+    --background: 0 0% 100%; 
+    --foreground: 224 71.4% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+    --primary: 262.1 83.3% 57.8%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 262.1 83.3% 57.8%;
+    --radius: 0.5rem;
+
+    /* QuickR sidebar tokens */
+    --sidebar-bg: 224 71.4% 4.1%;        /* near-black #09090b */
+    --sidebar-fg: 215 20.2% 65.1%;       /* muted slate */
+    --sidebar-fg-active: 210 20% 98%;    /* near-white */
+    --sidebar-accent: 262.1 83.3% 57.8%; /* violet */
+    --sidebar-border: 215 27.9% 16.9%;   /* subtle border */
+    --sidebar-width: 240px;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground; }
+}
+
+/* Sidebar utility classes */
+.sidebar {
+  width: var(--sidebar-width);
+  background: hsl(var(--sidebar-bg));
+  border-right: 1px solid hsl(var(--sidebar-border));
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 40;
+}
+
+.sidebar-content {
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+  background: hsl(var(--background));
+}
+
+html {
+  scroll-behavior: smooth;
+}
