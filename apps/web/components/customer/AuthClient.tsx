@@ -1,66 +1,202 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { 
-  Smartphone, 
-  Mail, 
-  Sparkles, 
-  Loader2, 
-  ArrowRight, 
-  ShieldCheck, 
-  UserX, 
-  CircleAlert 
-} from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { createClient } from "@/lib/supabase/client";
 
-interface CustomerLoginProps {
-  restaurantId: string;       // Resolved compiler mismatch
+interface AuthClientProps {
+  restaurantId: string;
   restaurantName: string;
-  slug: string;               // Resolved compiler mismatch
-  tableId: string | null;     // Resolved compiler mismatch
-  error: string;
-  loading: boolean;
-  phone: string;
-  otp: string[];
-  activeTab: "phone" | "gmail";
-  step: "phone" | "otp";
-  setPhone: (val: string) => void;
-  setActiveTab: (val: "phone" | "gmail") => void;
-  setStep: (val: "phone" | "otp") => void;
-  handleSendOtp: (e: React.FormEvent) => void;
-  handleVerifyOtp: (e: React.FormEvent) => void;
-  handleOtpChange: (val: string, index: number) => void;
-  handleGoogleLogin: () => void;
-  handleGuestLogin: () => void;
+  slug: string;
+  tableId: string | null;
 }
 
-export default function CustomerLoginPage({
-  restaurantId,
-  restaurantName,
-  slug,
-  tableId,
-  error,
-  loading,
-  phone,
-  otp,
-  activeTab,
-  step,
-  setPhone,
-  setActiveTab,
-  setStep,
-  handleSendOtp,
-  handleVerifyOtp,
-  handleOtpChange,
-  handleGoogleLogin,
-  handleGuestLogin
-}: CustomerLoginProps) {
-  
+export default function AuthClient({ restaurantId, restaurantName, slug, tableId }: AuthClientProps) {
+  const supabase = createClient();
+  const [activeTab, setActiveTab] = useState<"phone" | "gmail">("phone");
+  const [phone, setPhone] = useState("");
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const [step, setStep] = useState<"phone" | "otp">("phone");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-            
+  // 1. Phone login flow
+  async function handleSendOtp(e: React.FormEvent) {
+    e.preventDefault();
+    if (phone.length < 10) {
+      setError("Please enter a valid 10-digit mobile number.");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      // OTP verification stays here for later re-enable, but phone login currently bypasses OTP.
+      // const otpRes = await fetch("http://localhost:4000/otp/send", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({ phone }),
+      // });
+      // const otpData = await otpRes.json();
+      // if (!otpRes.ok) throw new Error(otpData.error || "Failed to send OTP.");
+
+      const sessionRes = await fetch("/api/customer/mobile-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ restaurant_id: restaurantId, table_id: tableId, mobile: phone }),
+      });
+
+      if (!sessionRes.ok) {
+        const data = await sessionRes.json();
+        throw new Error(data.error || "Failed to create session.");
+      }
+
+      window.location.href = `/r/${slug}`;
+    } catch (err: any) {
+      setError(err.message || "Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // 2. Verify OTP Flow
+  async function handleVerifyOtp(e: React.FormEvent) {
+    e.preventDefault();
+    const fullOtp = otp.join("");
+    if (fullOtp.length < 6) {
+      setError("Please enter the complete 6-digit OTP.");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      // OTP verification stays available for later re-enable.
+      // const res = await fetch("http://localhost:4000/otp/verify", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({ phone, otp: fullOtp }),
+      // });
+      // const data = await res.json();
+      // if (!res.ok) throw new Error(data.error || "Invalid OTP.");
+
+      const sessionRes = await fetch("/api/customer/mobile-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ restaurant_id: restaurantId, table_id: tableId, mobile: phone }),
+      });
+
+      if (!sessionRes.ok) {
+        const data = await sessionRes.json();
+        throw new Error(data.error || "Failed to initialize session.");
+      }
+
+      window.location.href = `/r/${slug}`;
+    } catch (err: any) {
+      setError(err.message || "Verification failed.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // 3. Google OAuth Flow
+  async function handleGoogleLogin() {
+    setLoading(true);
+    setError(null);
+    try {
+      localStorage.setItem("qr_pending_restaurant", restaurantId);
+      if (tableId) {
+        localStorage.setItem("qr_pending_table", tableId);
+      } else {
+        localStorage.removeItem("qr_pending_table");
+      }
+
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/r/${slug}/auth/callback`,
+        },
+      });
+      if (error) throw error;
+    } catch (err: any) {
+      setError(err.message || "Google sign-in failed.");
+      setLoading(false);
+    }
+  }
+
+  // 4. Guest Flow
+  // async function handleGuestLogin() {
+  //   setLoading(true);
+  //   setError(null);
+
+  //   try {
+  //     const res = await fetch("/api/customer/guest-session", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ restaurant_id: restaurantId, table_id: tableId }),
+  //     });
+
+  //     if (res.ok) {
+  //       window.location.href = `/r/${slug}`;
+  //     } else {
+  //       throw new Error("Failed to join as guest.");
+  //     }
+  //   } catch (err: any) {
+  //     setError(err.message || "Something went wrong.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }
+  // apps/web/components/customer/AuthClient.tsx
+
+async function handleGuestLogin() {
+  setLoading(true);
+  setError(null);
+
+  // 1. Explicitly get the table ID from the browser's cookies
+  const cookies = document.cookie.split(';');
+  const tableCookie = cookies.find(c => c.trim().startsWith('qr_table='));
+  const extractedTableId = tableCookie ? tableCookie.split('=')[1] : tableId;
+
+  try {
+    const res = await fetch("/api/customer/guest-session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ 
+        restaurant_id: restaurantId, 
+        table_id: extractedTableId // Send the extracted ID explicitly
+      }),
+    });
+
+    if (res.ok) {
+      window.location.href = `/r/${slug}`;
+    } else {
+      throw new Error("Failed to join as guest.");
+    }
+  } catch (err: any) {
+    setError(err.message || "Something went wrong.");
+  } finally {
+    setLoading(false);
+  }
+}
+
+
+  const handleOtpChange = (value: string, index: number) => {
+    if (isNaN(Number(value))) return;
+    const newOtp = [...otp];
+    newOtp[index] = value.substring(value.length - 1);
+    setOtp(newOtp);
+
+    if (value && index < 5) {
+      const nextInput = document.getElementById(`otp-${index + 1}`);
+      nextInput?.focus();
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-slate-50">
       <Card className="w-full max-w-md p-4 shadow-md bg-white border border-slate-100">
