@@ -1,318 +1,127 @@
 "use client";
 
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { createClient } from "@/lib/supabase/client";
-import { Smartphone, Mail, Sparkles, Loader2, ArrowRight, ShieldCheck, UserX, CircleAlert } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { 
+  Smartphone, 
+  Mail, 
+  Sparkles, 
+  Loader2, 
+  ArrowRight, 
+  ShieldCheck, 
+  UserX, 
+  CircleAlert 
+} from "lucide-react";
 
-interface AuthClientProps {
-  restaurantId: string;
+interface CustomerLoginProps {
   restaurantName: string;
-  slug: string;
-  tableId: string | null;
+  error: string;
+  loading: boolean;
+  phone: string;
+  otp: string[];
+  activeTab: "phone" | "gmail";
+  step: "phone" | "otp";
+  setPhone: (val: string) => void;
+  setActiveTab: (val: "phone" | "gmail") => void;
+  setStep: (val: "phone" | "otp") => void;
+  handleSendOtp: (e: React.FormEvent) => void;
+  handleVerifyOtp: (e: React.FormEvent) => void;
+  handleOtpChange: (val: string, index: number) => void;
+  handleGoogleLogin: () => void;
+  handleGuestLogin: () => void;
 }
 
-export default function AuthClient({ restaurantId, restaurantName, slug, tableId }: AuthClientProps) {
-  const supabase = createClient();
-  const [activeTab, setActiveTab] = useState<"phone" | "gmail">("phone");
-  const [phone, setPhone] = useState("");
-  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  const [step, setStep] = useState<"phone" | "otp">("phone");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  // 1. Phone login flow
-  async function handleSendOtp(e: React.FormEvent) {
-    e.preventDefault();
-    if (phone.length < 10) {
-      setError("Please enter a valid 10-digit mobile number.");
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      // OTP verification stays here for later re-enable, but phone login currently bypasses OTP.
-      // const otpRes = await fetch("http://localhost:4000/otp/send", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({ phone }),
-      // });
-      // const otpData = await otpRes.json();
-      // if (!otpRes.ok) throw new Error(otpData.error || "Failed to send OTP.");
-
-      const sessionRes = await fetch("/api/customer/mobile-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ restaurant_id: restaurantId, table_id: tableId, mobile: phone }),
-      });
-
-      if (!sessionRes.ok) {
-        const data = await sessionRes.json();
-        throw new Error(data.error || "Failed to create session.");
-      }
-
-      window.location.href = `/r/${slug}`;
-    } catch (err: any) {
-      setError(err.message || "Something went wrong.");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  // 2. Verify OTP Flow
-  async function handleVerifyOtp(e: React.FormEvent) {
-    e.preventDefault();
-    const fullOtp = otp.join("");
-    if (fullOtp.length < 6) {
-      setError("Please enter the complete 6-digit OTP.");
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      // OTP verification stays available for later re-enable.
-      // const res = await fetch("http://localhost:4000/otp/verify", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({ phone, otp: fullOtp }),
-      // });
-      // const data = await res.json();
-      // if (!res.ok) throw new Error(data.error || "Invalid OTP.");
-
-      const sessionRes = await fetch("/api/customer/mobile-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ restaurant_id: restaurantId, table_id: tableId, mobile: phone }),
-      });
-
-      if (!sessionRes.ok) {
-        const data = await sessionRes.json();
-        throw new Error(data.error || "Failed to initialize session.");
-      }
-
-      window.location.href = `/r/${slug}`;
-    } catch (err: any) {
-      setError(err.message || "Verification failed.");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  // 3. Google OAuth Flow
-  async function handleGoogleLogin() {
-    setLoading(true);
-    setError(null);
-    try {
-      localStorage.setItem("qr_pending_restaurant", restaurantId);
-      if (tableId) {
-        localStorage.setItem("qr_pending_table", tableId);
-      } else {
-        localStorage.removeItem("qr_pending_table");
-      }
-
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: `${window.location.origin}/r/${slug}/auth/callback`,
-        },
-      });
-      if (error) throw error;
-    } catch (err: any) {
-      setError(err.message || "Google sign-in failed.");
-      setLoading(false);
-    }
-  }
-
-  // 4. Guest Flow
-  // async function handleGuestLogin() {
-  //   setLoading(true);
-  //   setError(null);
-
-  //   try {
-  //     const res = await fetch("/api/customer/guest-session", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({ restaurant_id: restaurantId, table_id: tableId }),
-  //     });
-
-  //     if (res.ok) {
-  //       window.location.href = `/r/${slug}`;
-  //     } else {
-  //       throw new Error("Failed to join as guest.");
-  //     }
-  //   } catch (err: any) {
-  //     setError(err.message || "Something went wrong.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }
-  // apps/web/components/customer/AuthClient.tsx
-
-async function handleGuestLogin() {
-  setLoading(true);
-  setError(null);
-
-  // 1. Explicitly get the table ID from the browser's cookies
-  const cookies = document.cookie.split(';');
-  const tableCookie = cookies.find(c => c.trim().startsWith('qr_table='));
-  const extractedTableId = tableCookie ? tableCookie.split('=')[1] : tableId;
-
-  try {
-    const res = await fetch("/api/customer/guest-session", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ 
-        restaurant_id: restaurantId, 
-        table_id: extractedTableId // Send the extracted ID explicitly
-      }),
-    });
-
-    if (res.ok) {
-      window.location.href = `/r/${slug}`;
-    } else {
-      throw new Error("Failed to join as guest.");
-    }
-  } catch (err: any) {
-    setError(err.message || "Something went wrong.");
-  } finally {
-    setLoading(false);
-  }
-}
-
-
-  const handleOtpChange = (value: string, index: number) => {
-    if (isNaN(Number(value))) return;
-    const newOtp = [...otp];
-    newOtp[index] = value.substring(value.length - 1);
-    setOtp(newOtp);
-
-    if (value && index < 5) {
-      const nextInput = document.getElementById(`otp-${index + 1}`);
-      nextInput?.focus();
-    }
-  };
-  
+export default function CustomerLoginPage({
+  restaurantName,
+  error,
+  loading,
+  phone,
+  otp,
+  activeTab,
+  step,
+  setPhone,
+  setActiveTab,
+  setStep,
+  handleSendOtp,
+  handleVerifyOtp,
+  handleOtpChange,
+  handleGoogleLogin,
+  handleGuestLogin
+}: CustomerLoginProps) {
   return (
-  <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-[#FAF9F5]">
-    <Card className="w-full max-w-md border border-[#630102]/10 bg-[#EDEBDE] shadow-[0_8px_30px_rgb(0,0,0,0.03)] rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)]">
-      
-      {/* 1. Welcome Header */}
-      <CardHeader className="text-center pt-8 pb-4 border-b border-[#630102]/5 bg-white/40">
-        <CardTitle className="text-2xl font-bold tracking-tight text-[#0d0000] font-serif" style={{ fontFamily: "Playfair Display, Georgia, serif" }}>
-          Welcome to {restaurantName}
-        </CardTitle>
-      </CardHeader>
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-[#FAF9F5]">
+      <Card className="w-full max-w-md border border-[#630102]/10 bg-[#EDEBDE] shadow-[0_8px_30px_rgb(0,0,0,0.03)] rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)]">
+        
+        {/* 1. Welcome Header */}
+        <CardHeader className="text-center pt-8 pb-4 border-b border-[#630102]/5 bg-white/40">
+          <CardTitle className="text-2xl font-bold tracking-tight text-[#0d0000] font-serif" style={{ fontFamily: "Playfair Display, Georgia, serif" }}>
+            Welcome to {restaurantName}
+          </CardTitle>
+        </CardHeader>
 
-      <CardContent className="flex flex-col gap-6 p-6 sm:p-8">
-        {error && (
-          <div className="flex gap-2.5 items-start text-xs font-medium text-red-800 bg-red-50 border border-red-200/60 p-3.5 rounded-xl shadow-sm animate-in fade-in-50 duration-200">
-            <CircleAlert className="h-4 w-4 text-red-600 shrink-0 mt-0.5" />
-            <p className="leading-normal flex-1 text-left">{error}</p>
+        <CardContent className="flex flex-col gap-6 p-6 sm:p-8">
+          
+          {error && (
+            <div className="flex gap-2.5 items-start text-xs font-medium text-red-800 bg-red-50 border border-red-200/60 p-3.5 rounded-xl shadow-sm animate-in fade-in-50 duration-200">
+              <CircleAlert className="h-4 w-4 text-red-600 shrink-0 mt-0.5" />
+              <p className="leading-normal flex-1 text-left">{error}</p>
+            </div>
+          )}
+
+          {/* 2. Premium Segmented Tabs */}
+          <div className="flex w-full bg-white/60 p-1 rounded-xl border border-[#630102]/10 text-center font-medium text-sm">
+            <button 
+              type="button"
+              onClick={() => { setActiveTab("phone"); setStep("phone"); }} 
+              className={`flex-1 py-2.5 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 ${activeTab === "phone" ? "bg-[#630102] text-white font-semibold shadow-sm" : "text-[#0d0000]/50 hover:text-[#0d0000]/80"}`}
+            >
+              <Smartphone className="h-4 w-4" />
+              <span>Mobile OTP</span>
+            </button>
+            <button 
+              type="button"
+              onClick={() => setActiveTab("gmail")} 
+              className={`flex-1 py-2.5 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 ${activeTab === "gmail" ? "bg-[#630102] text-white font-semibold shadow-sm" : "text-[#0d0000]/50 hover:text-[#0d0000]/80"}`}
+            >
+              <Mail className="h-4 w-4" />
+              <span>Gmail Login</span>
+            </button>
           </div>
-        )}
 
-        {/* 2. Premium Segmented Tabs */}
-        <div className="flex w-full bg-white/60 p-1 rounded-xl border border-[#630102]/10 text-center font-medium text-sm">
-          <button 
-            type="button"
-            onClick={() => { setActiveTab("phone"); setStep("phone"); }} 
-            className={`flex-1 py-2.5 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 ${activeTab === "phone" ? "bg-[#630102] text-white font-semibold shadow-sm" : "text-[#0d0000]/50 hover:text-[#0d0000]/80"}`}
-          >
-            <Smartphone className="h-4 w-4" />
-            <span>Mobile OTP</span>
-          </button>
-          <button 
-            type="button"
-            onClick={() => setActiveTab("gmail")} 
-            className={`flex-1 py-2.5 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 ${activeTab === "gmail" ? "bg-[#630102] text-white font-semibold shadow-sm" : "text-[#0d0000]/50 hover:text-[#0d0000]/80"}`}
-          >
-            <Mail className="h-4 w-4" />
-            <span>Gmail Login</span>
-          </button>
-        </div>
+          {/* 3. Promo Banner Subtext */}
+          <div className="flex items-center justify-center gap-2 text-center text-xs font-semibold text-amber-900 tracking-wide bg-amber-100/70 border border-amber-200/50 py-2.5 px-4 rounded-xl">
+            <Sparkles className="h-3.5 w-3.5 text-amber-700 shrink-0 animate-pulse" />
+            <span>Unlock instant loyalty milestones & scratch rewards on checkout</span>
+          </div>
 
-        {/* 3. Promo Banner Subtext */}
-        <div className="flex items-center justify-center gap-2 text-center text-xs font-semibold text-amber-900 tracking-wide bg-amber-100/70 border border-amber-200/50 py-2.5 px-4 rounded-xl">
-          <Sparkles className="h-3.5 w-3.5 text-amber-700 shrink-0 animate-pulse" />
-          <span>Unlock instant loyalty milestones & scratch rewards on checkout</span>
-        </div>
-
-        {/* 4. Tab Interfaces */}
-        {activeTab === "phone" ? (
-          <div className="w-full animate-in fade-in-40 duration-200">
-            {step === "phone" ? (
-              <form onSubmit={handleSendOtp} className="flex flex-col gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="phone-input" className="text-xs font-semibold uppercase tracking-wider text-[#0d0000]/60">
-                    Phone Identification
-                  </Label>
-                  <div className="relative">
-                    <span className="absolute left-4 top-3 text-[#0d0000]/40 text-sm font-mono font-bold select-none border-r border-[#630102]/10 pr-2.5">
-                      +91
-                    </span>
-                    <Input 
-                      id="phone-input"
-                      type="tel" 
-                      placeholder="Enter 10 digit number" 
-                      value={phone} 
-                      onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 10))} 
-                      className="pl-16 text-base h-11 border-[#630102]/15 bg-white/50 focus:bg-white transition-all focus:ring-2 focus:ring-[#630102]/10 focus:border-[#630102] rounded-xl tracking-wider font-mono text-[#0d0000]" 
-                      disabled={loading} 
-                    />
-                  </div>
-                </div>
-                <Button 
-                  type="submit" 
-                  className="w-full h-11 text-sm font-semibold bg-[#630102] hover:bg-[#400102] text-white rounded-xl shadow-sm transition-all duration-150 flex items-center justify-center gap-2 active:scale-[0.98]" 
-                  disabled={loading}
-                >
-                  {loading ? (
-                    <>
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                      <span>Requesting Token...</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>Send Verification Code</span>
-                      <ArrowRight className="h-4 w-4 opacity-80" />
-                    </>
-                  )}
-                </Button>
-              </form>
-            ) : (
-              <form onSubmit={handleVerifyOtp} className="flex flex-col gap-5">
-                <div className="flex flex-col gap-3 text-center">
-                  <span className="text-xs font-medium text-[#0d0000]/60 flex items-center justify-center gap-1.5">
-                    <ShieldCheck className="h-3.5 w-3.5 text-[#630102]/60" />
-                    Code transmitted to +91 {phone}
-                  </span>
-                  
-                  {/* High Contrast Precise OTP Grid */}
-                  <div className="flex justify-between gap-2 max-w-xs mx-auto w-full pt-1">
-                    {otp.map((digit, index) => (
+          {/* 4. Tab Interfaces */}
+          {activeTab === "phone" ? (
+            <div className="w-full animate-in fade-in-40 duration-200">
+              {step === "phone" ? (
+                <form onSubmit={handleSendOtp} className="flex flex-col gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="phone-input" className="text-xs font-semibold uppercase tracking-wider text-[#0d0000]/60">
+                      Phone Identification
+                    </Label>
+                    <div className="relative">
+                      <span className="absolute left-4 top-3 text-[#0d0000]/40 text-sm font-mono font-bold select-none border-r border-[#630102]/10 pr-2.5">
+                        +91
+                      </span>
                       <Input 
-                        key={index} 
-                        id={`otp-${index}`} 
-                        type="text" 
-                        pattern="[0-9]*" 
-                        inputMode="numeric" 
-                        maxLength={1} 
-                        value={digit} 
-                        onChange={(e) => handleOtpChange(e.target.value, index)} 
-                        className="w-12 h-14 text-center text-xl font-bold p-0 border-[#630102]/15 bg-white/50 focus:bg-white transition-all focus:ring-2 focus:ring-[#630102]/20 focus:border-[#630102] rounded-xl text-[#0d0000] font-mono shadow-inner shadow-black/[0.01]" 
+                        id="phone-input"
+                        type="tel" 
+                        placeholder="Enter 10 digit number" 
+                        value={phone} 
+                        onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 10))} 
+                        className="pl-16 text-base h-11 border-[#630102]/15 bg-white/50 focus:bg-white transition-all focus:ring-2 focus:ring-[#630102]/10 focus:border-[#630102] rounded-xl tracking-wider font-mono text-[#0d0000]" 
                         disabled={loading} 
                       />
-                    ))}
+                    </div>
                   </div>
-                </div>
-
-                <div className="flex flex-col gap-2.5">
                   <Button 
                     type="submit" 
                     className="w-full h-11 text-sm font-semibold bg-[#630102] hover:bg-[#400102] text-white rounded-xl shadow-sm transition-all duration-150 flex items-center justify-center gap-2 active:scale-[0.98]" 
@@ -321,74 +130,123 @@ async function handleGuestLogin() {
                     {loading ? (
                       <>
                         <Loader2 className="h-4 w-4 animate-spin" />
-                        <span>Authorizing Terminals...</span>
+                        <span>Requesting Token...</span>
                       </>
                     ) : (
                       <>
-                        <span>Verify Secure OTP</span>
+                        <span>Send Verification Code</span>
+                        <ArrowRight className="h-4 w-4 opacity-80" />
                       </>
                     )}
                   </Button>
-                  <Button 
-                    type="button" 
-                    variant="ghost" 
-                    size="sm" 
-                    onClick={() => setStep("phone")} 
-                    disabled={loading} 
-                    className="text-xs text-[#0d0000]/50 hover:text-[#0d0000]/80 hover:bg-[#630102]/5 rounded-lg"
-                  >
-                    Modify Phone Core Reference
-                  </Button>
-                </div>
-              </form>
-            )}
-          </div>
-        ) : (
-          <div className="w-full py-1 animate-in fade-in-40 duration-200">
-            <Button 
-              variant="outline" 
-              className="w-full h-11 text-sm font-semibold flex items-center justify-center gap-2 border-[#630102]/15 bg-white/60 text-[#0d0000] hover:bg-white transition-all focus:ring-2 focus:ring-[#630102]/10 rounded-xl shadow-sm group" 
-              onClick={handleGoogleLogin} 
-              disabled={loading}
-            >
-              <svg className="h-4 w-4 shrink-0 transition-transform group-hover:scale-105" viewBox="0 0 24 24" width="24" height="24" xmlns="http://w3.org">
-                <g transform="matrix(1, 0, 0, 1, 0, 0)">
-                  <path d="M21.35,11.1H12v2.7h5.38c-0.24,1.28 -0.96,2.37 -2.04,3.1v2.6h3.3c1.93,-1.78 3.04,-4.4 3.04,-7.4c0,-0.7 -0.07,-1.3 -0.33,-2H21.35z" fill="#4285F4" />
-                  <path d="M12,20.7c2.6,0 4.78,-0.86 6.38,-2.3l-3.3,-2.6c-0.9,0.6 -2.07,0.98 -3.08,0.98c-2.98,0 -5.5,-2.03 -6.4,-4.76H2.17v2.7C3.78,17.9 7.64,20.7 12,20.7z" fill="#34A853" />
-                  <path d="M5.6,12.02c-0.23,-0.69 -0.36,-1.43 -0.36,-2.19c0,-0.76 0.13,-1.5 0.36,-2.19V4.94H2.17C1.4,6.48 1,8.19 1,10.02c0,1.83 0.4,3.54 1.17,5.08L5.6,12.02z" fill="#FBBC05" />
-                  <path d="M12,5.22c1.4,0 2.68,0.48 3.67,1.43l2.75,-2.75C16.77,2.44 14.6,1.32 12,1.32C7.64,1.32 3.78,4.12 2.17,7.34l3.43,2.68C6.5,7.25 9.02,5.22 12,5.22z" fill="#EA4335" />
-                </g>
-              </svg>
-              <span>Authenticate via Google Workspace</span>
-            </Button>
-          </div>
-        )}
+                </form>
+              ) : (
+                <form onSubmit={handleVerifyOtp} className="flex flex-col gap-5">
+                  <div className="flex flex-col gap-3 text-center">
+                    <span className="text-xs font-medium text-[#0d0000]/60 flex items-center justify-center gap-1.5">
+                      <ShieldCheck className="h-3.5 w-3.5 text-[#630102]/60" />
+                      Code transmitted to +91 {phone}
+                    </span>
+                    
+                    {/* High Contrast Precise OTP Grid */}
+                    <div className="flex justify-between gap-2 max-w-xs mx-auto w-full pt-1">
+                      {otp.map((digit, index) => (
+                        <Input 
+                          key={index} 
+                          id={`otp-${index}`} 
+                          type="text" 
+                          pattern="[0-9]*" 
+                          inputMode="numeric" 
+                          maxLength={1} 
+                          value={digit} 
+                          onChange={(e) => handleOtpChange(e.target.value, index)} 
+                          className="w-12 h-14 text-center text-xl font-bold p-0 border-[#630102]/15 bg-white/50 focus:bg-white transition-all focus:ring-2 focus:ring-[#630102]/20 focus:border-[#630102] rounded-xl text-[#0d0000] font-mono shadow-inner shadow-black/[0.01]" 
+                          disabled={loading} 
+                        />
+                      ))}
+                    </div>
+                  </div>
 
-        {/* 5. Horizontal Divider Section */}
-        <div className="relative flex py-1 items-center text-[10px] uppercase font-bold tracking-widest">
-          <div className="flex-grow border-t border-[#630102]/10" />
-          <span className="flex-shrink mx-4 text-[#0d0000]/40">Neutral Intermediary State</span>
-          <div className="flex-grow border-t border-[#630102]/10" />
-        </div>
-        
-                {/* 6. Guest Option */}
-        <div className="w-full">
+                  <div className="flex flex-col gap-2.5">
+                    <Button 
+                      type="submit" 
+                      className="w-full h-11 text-sm font-semibold bg-[#630102] hover:bg-[#400102] text-white rounded-xl shadow-sm transition-all duration-150 flex items-center justify-center gap-2 active:scale-[0.98]" 
+                      disabled={loading}
+                    >
+                      {loading ? (
+                        <>
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                          <span>Authorizing Terminals...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Verify Secure OTP</span>
+                        </>
+                      )}
+                    </Button>
+                    <Button 
+                      type="button" 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={() => setStep("phone")} 
+                      disabled={loading} 
+                      className="text-xs text-[#0d0000]/50 hover:text-[#0d0000]/80 hover:bg-[#630102]/5 rounded-lg"
+                    >
+                      Modify Phone Core Reference
+                    </Button>
+                  </div>
+                </form>
+              )}
+            </div>
+          ) : (
+            <div className="w-full py-1 animate-in fade-in-40 duration-200">
+              <Button 
+                variant="outline" 
+                className="w-full h-11 text-sm font-semibold flex items-center justify-center gap-2 border-[#630102]/15 bg-white/60 text-[#0d0000] hover:bg-white transition-all focus:ring-2 focus:ring-[#630102]/10 rounded-xl shadow-sm group" 
+                onClick={handleGoogleLogin} 
+                disabled={loading}
+              >
+                {loading ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <svg className="h-4 w-4 shrink-0 transition-transform group-hover:scale-105" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05" />
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+                  </svg>
+                )}
+                <span>Authenticate via Google Workspace</span>
+              </Button>
+            </div>
+          )}
+
+          {/* 5. Horizontal Divider Section */}
+          <div className="relative flex items-center my-1">
+            <div className="flex-grow border-t border-[#630102]/10"></div>
+            <span className="flex-shrink mx-4 text-[10px] uppercase font-bold tracking-widest text-[#0d0000]/30 bg-[#EDEBDE] px-2">
+              Neutral Intermediary State
+            </span>
+            <div className="flex-grow border-t border-[#630102]/10"></div>
+          </div>
+
+          {/* 6. Guest Option */}
           <Button 
-            variant="secondary" 
-            onClick={handleGuestLogin} 
-            className="w-full h-11 text-sm font-semibold bg-white/40 text-[#0d0000]/70 hover:text-[#0d0000] hover:bg-white border border-[#630102]/10 transition-all rounded-xl shadow-inner active:scale-[0.99] flex items-center justify-center gap-2" 
+            type="button"
+            variant="ghost" 
+            className="w-full h-11 text-sm font-semibold flex items-center justify-center gap-2 border border-dashed border-[#630102]/20 hover:border-[#630102]/40 hover:bg-[#630102]/5 text-[#630102] rounded-xl transition-all"
+            onClick={handleGuestLogin}
             disabled={loading}
           >
-            <UserX className="h-4 w-4 opacity-70" />
+            <UserX className="h-4 w-4 shrink-0" />
             <span>Proceed Anonymously as Guest</span>
           </Button>
-        </div>
-      </CardContent>
-    </Card>
-  </div>
-);
+
+        </CardContent>
+      </Card>
+    </div>
+  );
 }
- 
 
             
 //   return (
