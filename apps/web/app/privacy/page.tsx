@@ -121,14 +121,14 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="mb-3 text-base font-semibold" style={{ color: "#0d0000" }}>Third-party services</h2>
+            <h2 className="mb-3 text-base font-semibold" style={{ color: "#0d0000" }}>Our Service Providers & Partners</h2>
             <ul className="space-y-2">
               {[
-                ["Supabase", "Our database and authentication infrastructure. Data is stored on servers in the region closest to India."],
-                ["MSG91", "Indian SMS provider used to deliver OTP messages to your mobile number."],
-                ["Vercel", "Our web hosting provider. Your requests are served through Vercel's global edge network."],
-                ["Upstash Redis", "Used for rate limiting to prevent abuse. No personal data is stored here."],
-                ["Google OAuth", "Used only if you choose to sign in with Google. Governed by Google's own privacy policy."],
+                ["Technical Infrastructure"," We use trusted cloud infrastructure and web hosting partners to manage our database, route network traffic, and prevent system abuse."],
+                ["Data Localization"," In compliance with Indian regulations, all your personal data is stored and processed on secure cloud servers physically located within India."],
+                ["Communication Partners","We use localized telecom infrastructure and SMS gateway providers to securely deliver OTPs to your registered mobile number."],
+                ["Third-Party Logins","If you sign in via Google OAuth, that interaction is governed independently by Google’s own privacy framework."],
+                
               ].map(([name, desc]) => (
                 <li key={name as string} className="flex gap-3">
                   <span
@@ -150,11 +150,15 @@ export default function PrivacyPage() {
               You can request deletion of your data at any time by emailing us.
               We will delete your customer profile and all associated order history,
               visit history, and loyalty data within 7 business days.
+             
             </p>
             <p className="mt-3">
               If you signed in as a guest, your data is automatically deleted within
               48 hours anyway — no action needed.
             </p>
+             <p>
+                No False Information: Under Indian law, you must not impersonate another person or provide false, misleading, or incorrect information when registering or ordering.
+              </p>
           </section>
 
           <section>
