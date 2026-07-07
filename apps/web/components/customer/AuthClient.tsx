@@ -18,7 +18,10 @@ import {
 } from "lucide-react";
 
 interface CustomerLoginProps {
+  restaurantId: string;       // Resolved compiler mismatch
   restaurantName: string;
+  slug: string;               // Resolved compiler mismatch
+  tableId: string | null;     // Resolved compiler mismatch
   error: string;
   loading: boolean;
   phone: string;
@@ -36,7 +39,10 @@ interface CustomerLoginProps {
 }
 
 export default function CustomerLoginPage({
+  restaurantId,
   restaurantName,
+  slug,
+  tableId,
   error,
   loading,
   phone,
@@ -247,7 +253,6 @@ export default function CustomerLoginPage({
     </div>
   );
 }
-
             
 //   return (
 //     <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-slate-50">
