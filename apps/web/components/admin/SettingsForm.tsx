@@ -1,13 +1,7 @@
+
+
 "use client";
-
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Store, Palette, Award, Loader2, Save, CheckCircle2, AlertCircle } from "lucide-react";
-
+import { useState } from "react";import { useRouter } from "next/navigation";import { Button } from "@/components/ui/button";import { Input } from "@/components/ui/input";import { Label } from "@/components/ui/label";import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";import { Store, Palette, Award, Loader2, Save, CheckCircle2, AlertCircle } from "lucide-react";
 interface Restaurant {
   id: string;
   slug: string;
@@ -17,7 +11,6 @@ interface Restaurant {
   loyalty_streak_target: number;
   primary_color: string;
 }
-
 export function SettingsForm({ restaurant }: { restaurant: Restaurant }) {
   const router = useRouter();
   const [form, setForm] = useState({
@@ -54,7 +47,7 @@ export function SettingsForm({ restaurant }: { restaurant: Restaurant }) {
         const data = await res.json();
         throw new Error(data.error ?? "Failed to finalize operations.");
       }
-      
+
       setSuccess(true);
       router.refresh();
     } catch (err: any) {
@@ -66,7 +59,6 @@ export function SettingsForm({ restaurant }: { restaurant: Restaurant }) {
 
   return (
     <form onSubmit={handleSave} className="space-y-8 max-w-3xl mx-auto pb-12">
-      
       {/* Block 1: Core Restaurant Metadata Identity */}
       <Card className="border-[#630102]/10 bg-[#EDEBDE] shadow-[0_4px_20px_rgba(99,1,2,0.02)] rounded-xl overflow-hidden transition-all duration-200 hover:shadow-[0_4px_20px_rgba(99,1,2,0.04)]">
         <CardHeader className="flex flex-row items-center gap-4 space-y-0 border-b border-[#630102]/10 pb-4">
@@ -84,37 +76,35 @@ export function SettingsForm({ restaurant }: { restaurant: Restaurant }) {
               <Label htmlFor="name" className="text-xs font-semibold uppercase tracking-wider text-[#0d0000]/70">
                 Official Business Name
               </Label>
-              <Input 
-                id="name" 
-                value={form.name} 
-                onChange={(e) => set("name", e.target.value)} 
+              <Input
+                id="name"
+                value={form.name}
+                onChange={(e) => set("name", e.target.value)}
                 placeholder="e.g. The Grand Bistro"
                 className="h-11 border-[#630102]/15 bg-white/50 focus:bg-white transition-all focus:ring-2 focus:ring-[#630102]/10 focus:border-[#630102] rounded-lg text-sm text-[#0d0000]"
-                required 
+                required
               />
             </div>
-            
-            <div className="space-y-2">
+            <div className="space-y-2 col-span-1 md:col-span-2">
               <Label htmlFor="phone" className="text-xs font-semibold uppercase tracking-wider text-[#0d0000]/70">
                 Contact Phone Line
               </Label>
-              <Input 
-                id="phone" 
-                value={form.phone} 
-                onChange={(e) => set("phone", e.target.value)} 
+              <Input
+                id="phone"
+                value={form.phone}
+                onChange={(e) => set("phone", e.target.value)}
                 placeholder="+91 XXXXX XXXXX"
                 className="h-11 border-[#630102]/15 bg-white/50 focus:bg-white transition-all focus:ring-2 focus:ring-[#630102]/10 focus:border-[#630102] rounded-lg text-sm font-mono text-[#0d0000]"
               />
             </div>
-
             <div className="space-y-2 col-span-1 md:col-span-2">
               <Label htmlFor="address" className="text-xs font-semibold uppercase tracking-wider text-[#0d0000]/70">
                 Physical Operations Address
               </Label>
-              <Input 
-                id="address" 
-                value={form.address} 
-                onChange={(e) => set("address", e.target.value)} 
+              <Input
+                id="address"
+                value={form.address}
+                onChange={(e) => set("address", e.target.value)}
                 placeholder="Complete street block details, city, postal code"
                 className="h-11 border-[#630102]/15 bg-white/50 focus:bg-white transition-all focus:ring-2 focus:ring-[#630102]/10 focus:border-[#630102] rounded-lg text-sm text-[#0d0000]"
               />
@@ -141,19 +131,19 @@ export function SettingsForm({ restaurant }: { restaurant: Restaurant }) {
             </Label>
             <div className="flex items-center gap-3">
               <div className="relative h-11 w-14 shrink-0 rounded-lg border border-[#630102]/20 overflow-hidden shadow-inner bg-white/40 flex items-center justify-center">
-                <input 
-                  id="color" 
-                  type="color" 
-                  value={form.primary_color} 
-                  onChange={(e) => set("primary_color", e.target.value)} 
-                  className="absolute inset-0 h-full w-full scale-150 cursor-pointer border-0 p-0" 
+                <input
+                  id="color"
+                  type="color"
+                  value={form.primary_color}
+                  onChange={(e) => set("primary_color", e.target.value)}
+                  className="absolute inset-0 h-full w-full scale-150 cursor-pointer border-0 p-0"
                 />
               </div>
-              <Input 
-                value={form.primary_color} 
-                onChange={(e) => set("primary_color", e.target.value)} 
-                className="h-11 font-mono tracking-wider text-sm border-[#630102]/15 bg-white/50 focus:bg-white transition-all focus:ring-2 focus:ring-[#630102]/10 focus:border-[#630102] rounded-lg uppercase w-36" 
-                maxLength={7} 
+              <Input
+                value={form.primary_color}
+                onChange={(e) => set("primary_color", e.target.value)}
+                className="h-11 font-mono tracking-wider text-sm border-[#630102]/15 bg-white/50 focus:bg-white transition-all focus:ring-2 focus:ring-[#630102]/10 focus:border-[#630102] rounded-lg uppercase w-36"
+                maxLength={7}
               />
             </div>
             <p className="text-[11px] text-[#630102]/65 leading-normal">
@@ -180,13 +170,13 @@ export function SettingsForm({ restaurant }: { restaurant: Restaurant }) {
               Check-In Verification Targets
             </Label>
             <div className="relative flex items-center">
-              <Input 
-                id="streak" 
-                type="number" 
-                min={2} 
-                max={30} 
-                value={form.loyalty_streak_target} 
-                onChange={(e) => set("loyalty_streak_target", Number(e.target.value))} 
+              <Input
+                id="streak"
+                type="number"
+                min={2}
+                max={30}
+                value={form.loyalty_streak_target}
+                onChange={(e) => set("loyalty_streak_target", Number(e.target.value))}
                 className="h-11 border-[#630102]/15 bg-white/50 focus:bg-white transition-all focus:ring-2 focus:ring-[#630102]/10 focus:border-[#630102] rounded-lg text-sm text-[#0d0000]"
               />
               <span className="absolute right-4 text-xs font-medium text-[#0d0000]/40 pointer-events-none">
@@ -208,21 +198,42 @@ export function SettingsForm({ restaurant }: { restaurant: Restaurant }) {
             <p className="leading-normal">{error}</p>
           </div>
         )}
+        {/* n */}
 
-       {success && (
-        <p className="rounded-md bg-green-50 px-3 py-2 text-sm text-green-700">
-           Settings saved.
-         </p>
-       )}
-  
-       <Button type="submit" disabled={loading}>
-         {loading ? "Saving…" : "Save changes"}
-       </Button>
-     </form>
-   );
- }
+        {success && (
+          <div className="flex gap-2.5 items-start text-xs font-medium text-emerald-800 bg-emerald-50 border border-emerald-200/60 p-3.5 rounded-lg shadow-sm animate-in fade-in-50 duration-200">
+            <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
+            <p className="leading-normal">Configuration engine successfully saved and pushed live.</p>
+          </div>
+        )}
+      </div>
 
+      {/* Core Operational CTA Button */}
+      <div className="flex justify-end pt-2 border-t border-[#630102]/10">
+        <Button 
+          type="submit" 
+          className="h-11 px-6 bg-[#630102] hover:bg-[#400102] text-white font-medium shadow-sm transition-all duration-150 rounded-lg flex items-center gap-2 active:scale-[0.98]" 
+          disabled={loading}
+        >
+          {loading ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <span>Saving adjustments...</span>
+            </>
+          ) : (
+            <>
+              <Save className="h-4 w-4 opacity-80" />
+              <span>Save Configuration</span>
+            </>
+          )}
+        </Button>
+      </div>
 
+    </form>
+  );
+}
+
+      
 
 
 
