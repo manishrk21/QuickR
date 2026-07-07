@@ -25,6 +25,27 @@ export default async function AdminLayout({
     .single();
 
   if (!restaurant) redirect("/admin/login");
+//lock the admin if activity=false
+  if (!restaurant.is_active) {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-[hsl(var(--sidebar-bg))]">
+      <div className="bg-white rounded-xl p-8 max-w-sm w-full text-center shadow-2xl">
+        <p className="text-2xl mb-3">🔒</p>
+        <h1 className="text-lg font-semibold text-slate-900">Account suspended</h1>
+        <p className="text-sm text-slate-500 mt-2">
+          Your QuickR account has been deactivated. 
+          Contact support to reactivate.
+        </p>
+        
+          href="mailto:hello@quickr.in"
+          className="mt-4 inline-block text-sm text-violet-600 underline"
+        >
+          hello@quickr.in
+        </a>
+      </div>
+    </div>
+  );
+}
 
   const { data: member } = await supabase
     .from("tenant_members")
