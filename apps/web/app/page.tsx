@@ -187,7 +187,7 @@ export default function HomePage() {
             className="mb-4 text-xs font-semibold uppercase tracking-[0.25em]"
             style={{ color: "#630102", opacity: 0.7 }}
           >
-            Contactless ordering platform
+            Qr ordering system
           </p>
 
           <h1
@@ -197,17 +197,23 @@ export default function HomePage() {
               color: "#0d0000",
             }}
           >
-            Your menu, their phone,{" "}
-            <span style={{ color: "#630102" }}>no friction.</span>
+            Order Faster {" "}
+            <span style={{ color: "#630102" }}>Dine Smarter</span>
           </h1>
 
           <p
             className="mx-auto mt-6 max-w-xl text-base leading-relaxed sm:text-lg"
             style={{ color: "#4e1e04a3" }}
           >
-            QuickR gives restaurants and cafes a QR-based digital ordering system.
-            Customers scan, browse, and order — you see every order live on your
-            dashboard.
+
+            We believe ordering food should be as
+              enjoyable as eating it — no apps, no queues, no confusion.
+            
+           <p  className="mx-auto mt-6 max-w-xl text-lg font-medium leading-relaxed tracking-wide sm:text-xl md:text-2xl transition-transform duration-300 ease-out hover:scale-105 cursor-default" style={{ color: "#2B0B00", fontFamily: "Playfair Display, Georgia, serif" }}>
+              A QR code on the table is <span style={{ color: "#630102", fontWeight: 700 }}>all it takes.</span>
+            </p>
+
+           
           </p>
 
           <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
@@ -216,7 +222,7 @@ export default function HomePage() {
               className="rounded-full px-7 py-3 text-sm font-semibold transition-all hover:opacity-90"
               style={{ background: "#630102", color: "#EDEBDE" }}
             >
-              List your restaurant
+              Try for your CAFE
             </a>
             <a
               href="#how-it-works"
@@ -278,11 +284,11 @@ export default function HomePage() {
               </p>
               <ul className="space-y-4">
                 {[
-                  ["Digital menu", "Add categories, items, photos, and prices. Update anytime — changes are live instantly."],
-                  ["Live order dashboard", "Every order appears the moment it's placed. Accept, prepare, serve, and mark paid in one screen."],
-                  ["QR table management", "Generate a unique QR code per table. Customers scan and order — no app, no download."],
-                  ["Loyalty tracking", "Set a visit target. Customers earn rewards automatically. You see every streak in your dashboard."],
-                  ["Analytics", "Daily revenue, top items, and peak hours. All in one place, no spreadsheets."],
+                  ["Digital menu", "Update anytime — changes are live instantly."],
+                  ["Live order dashboard", "Have track of every order"],
+                  ["QR table management", "Every table with it's own identity"],
+                  ["Streak tracking", "Improves customer loyalty and revenue per customer"],
+                  ["Analytics", "All analytics as daily revenue, top items, and peak hours. All in one place "],
                 ].map(([title, desc]) => (
                   <li key={title as string} className="flex gap-4">
                     <span
@@ -308,7 +314,7 @@ export default function HomePage() {
               </p>
               <ul className="space-y-4">
                 {[
-                  ["No app required", "Just a camera. Scan the QR on the table and the menu opens in their browser."],
+                  ["No app required", "Just browse and order"],
                   ["Real-time order tracking", "Customers see their order go from received to prepared to served — live."],
                   ["Phone or guest login", "OTP on mobile, Google, or continue as guest. No passwords to remember."],
                   ["Loyalty rewards", "Every visit counts toward a reward. They see their streak on the menu page."],
@@ -389,12 +395,13 @@ export default function HomePage() {
             </p>
             <p className="text-sm leading-relaxed" style={{ color: "rgba(237,235,222,0.7)" }}>
               QuickR is a contactless ordering platform built for Indian
-              restaurants and cafes. We believe ordering food should be as
-              enjoyable as eating it — no apps, no queues, no confusion.
-              A QR code on the table is all it takes.
+              restaurants and cafes.  QuickR gives cafes and restaurants a QR-based digital ordering system.
+              Customers scan, browse, and order — you see every order live on your
+              dashboard without any app.
+            
             </p>
             <p className="mt-4 text-sm leading-relaxed" style={{ color: "rgba(237,235,222,0.5)" }}>
-              Built in India. Designed for the way Indian restaurants actually work.
+              Built by MRK_21 with ❤️ for the Indian cafes/restaurants .
             </p>
           </div>
 
@@ -413,7 +420,7 @@ export default function HomePage() {
                 className="underline underline-offset-4 transition-opacity hover:opacity-80"
                 style={{ color: "#EDEBDE" }}
               >
-                hello@quickr.in {/* ← replace with your email */}
+                mrk21creates@gmail.com {/* ← replace with your email */}
               </a>
             </p>
             <p className="mt-6 text-sm" style={{ color: "rgba(237,235,222,0.4)" }}>
