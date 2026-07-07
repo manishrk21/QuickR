@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
+import { Smartphone, Mail, Sparkles, Loader2, ArrowRight, ShieldCheck, UserX, CircleAlert } from "lucide-react";
 
 interface AuthClientProps {
   restaurantId: string;
@@ -209,10 +210,9 @@ async function handleGuestLogin() {
       </CardHeader>
 
       <CardContent className="flex flex-col gap-6 p-6 sm:p-8">
-        
         {error && (
           <div className="flex gap-2.5 items-start text-xs font-medium text-red-800 bg-red-50 border border-red-200/60 p-3.5 rounded-xl shadow-sm animate-in fade-in-50 duration-200">
-            <AlertCircle className="h-4 w-4 text-red-600 shrink-0 mt-0.5" />
+            <CircleAlert className="h-4 w-4 text-red-600 shrink-0 mt-0.5" />
             <p className="leading-normal flex-1 text-left">{error}</p>
           </div>
         )}
