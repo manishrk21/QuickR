@@ -149,7 +149,7 @@ export function WaitlistForm() {
           className="rounded-lg px-4 py-3 text-sm"
           style={{ background: "rgba(99,1,2,0.08)", color: "#630102" }}
         >
-          Something went wrong. Please email us directly at hello@quickr.in
+          Something went wrong. Please email us directly at mrk21creates@gmail.com
         </p>
       )}
 
