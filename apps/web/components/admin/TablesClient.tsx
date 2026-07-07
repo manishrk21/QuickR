@@ -92,7 +92,7 @@ export function TablesClient({ initialTables, slug }: TablesClientProps) {
               <Plus size={16} className="mr-2" /> Add table 
             </Button> 
           </DialogTrigger> 
-          <DialogContent className="sm:max-w-sm"> 
+          <DialogContent className="sm:max-w-sm bg-white dark:bg-slate-900 border border-slate-200 shadow-lg rounded-lg"> 
             <DialogHeader> 
               <DialogTitle>Add a table</DialogTitle> 
             </DialogHeader> 
