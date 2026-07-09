@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { LayoutDashboard,
+  ShoppingBag,
   UtensilsCrossed,
   QrCode,
   ClipboardList,
@@ -23,6 +24,7 @@ interface SidebarProps {
 const navItems = (slug: string) => [
     { href: `/admin/${slug}`,                    icon: LayoutDashboard, label: "Dashboard" },
     { href: `/admin/${slug}/orders`,             icon: ClipboardList,   label: "Orders" },
+    { href: `/admin/${slug}/counter`,            icon: ShoppingBag,     label: "Counter" },   // ← Added Row
     { href: `/admin/${slug}/menu`,               icon: UtensilsCrossed, label: "Menu" },
     { href: `/admin/${slug}/menu/categories`,    icon: FolderOpen,      label: "Categories" },
     { href: `/admin/${slug}/tables`,             icon: QrCode,          label: "Tables & QR" },
