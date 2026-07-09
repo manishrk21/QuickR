@@ -365,9 +365,7 @@ export function CounterClient({
               </button>
             ))}
           </div>
-          
-
-          {/* Menu items grid */}
+    
           {/* Menu items grid */}
           {filteredItems.length === 0 ? (
             <div className="border-2 border-dashed border-slate-200 rounded-xl py-12 text-center">
@@ -376,53 +374,45 @@ export function CounterClient({
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            /* Changed grid-cols-1 to grid-cols-2 to force two columns on mobile */
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
               {filteredItems.map((item) => {
                 const qty = getQty(item.id);
                 return (
                   <div
                     key={item.id}
-                    className={`border rounded-lg p-2.5 bg-white transition-all ${
+                    className={`border rounded-lg p-2 bg-white flex flex-col justify-between min-h-[90px] transition-all ${
                       qty > 0
                         ? "border-slate-300 ring-1 ring-slate-200"
                         : "border-slate-100 hover:border-slate-200"
                     }`}
                   >
-                    {/* ROW 1: Item Name (Left) & Price (Right) */}
-                    <div className="flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-1.5 min-w-0">
-                        <FoodTypeIndicator type={item.food_type} size="sm" />
-                        <p className="font-semibold text-sm text-slate-900 leading-tight truncate">
-                          {item.name}
-                        </p>
-                      </div>
-                      <p className="text-sm font-bold text-slate-800 shrink-0">
-                        ₹{item.price.toFixed(0)}
+                    {/* ROW 1: Food Indicator + Item Name */}
+                    <div className="flex items-start gap-1.5 min-w-0">
+                      <FoodTypeIndicator type={item.food_type} size="sm" />
+                      <p className="font-semibold text-xs text-slate-900 leading-tight line-clamp-2">
+                        {item.name}
                       </p>
                     </div>
 
-                    {/* ROW 2: Description (Left) & Add Button / Qty Controls (Right) */}
-                    <div className="mt-1.5 flex items-center justify-between gap-4">
-                      <div className="min-w-0 flex-1">
-                        {item.description && (
-                          <p className="text-xs text-slate-400 truncate">
-                            {item.description}
-                          </p>
-                        )}
-                      </div>
+                    {/* ROW 2: Price & Add Button / Qty Actions (No Description) */}
+                    <div className="mt-2 flex items-center justify-between gap-2 pt-1 border-t border-slate-50">
+                      <p className="text-xs font-bold text-slate-800 shrink-0">
+                        ₹{item.price.toFixed(0)}
+                      </p>
 
                       <div className="shrink-0">
                         {qty === 0 ? (
                           <button
                             onClick={() => addItem(item)}
-                            className="text-[11px] font-bold px-3 py-1 rounded-md border transition-colors"
+                            className="text-[10px] font-bold px-2.5 py-0.5 rounded border transition-colors"
                             style={{ borderColor: primary, color: primary }}
                           >
                             ADD
                           </button>
                         ) : (
                           <div
-                            className="flex items-center gap-2 rounded-md px-1.5 py-0.5"
+                            className="flex items-center gap-1.5 rounded px-1 py-0.5"
                             style={{ background: primary + "15" }}
                           >
                             <button
@@ -431,13 +421,13 @@ export function CounterClient({
                               style={{ color: primary }}
                             >
                               {qty === 1 ? (
-                                <Trash2 size={13} />
+                                <Trash2 size={12} />
                               ) : (
-                                <Minus size={13} />
+                                <Minus size={12} />
                               )}
                             </button>
                             <span
-                              className="text-xs font-bold w-4 text-center"
+                              className="text-xs font-bold w-3 text-center"
                               style={{ color: primary }}
                             >
                               {qty}
@@ -447,7 +437,7 @@ export function CounterClient({
                               className="rounded transition-opacity hover:opacity-70"
                               style={{ color: primary }}
                             >
-                              <Plus size={13} />
+                              <Plus size={12} />
                             </button>
                           </div>
                         )}
@@ -459,6 +449,8 @@ export function CounterClient({
             </div>
           )}
         </div>
+
+       
         
         {/* ── RIGHT: Order details panel (desktop sidebar) ─────────────── */}
         <div className="hidden xl:flex flex-col gap-4">
