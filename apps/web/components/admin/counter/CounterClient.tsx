@@ -375,13 +375,13 @@ export function CounterClient({
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
               {filteredItems.map((item) => {
                 const qty = getQty(item.id);
                 return (
                   <div
                     key={item.id}
-                    className={`border rounded-xl p-3 bg-white transition-all ${
+                    className={`border rounded-xl p-2 bg-white transition-all ${
                       qty > 0
                         ? "border-slate-300 ring-1 ring-slate-200"
                         : "border-slate-100 hover:border-slate-200"
@@ -394,7 +394,7 @@ export function CounterClient({
                           {item.name}
                         </p>
                         {item.description && (
-                          <p className="text-xs text-slate-400 mt-0.5 line-clamp-1">
+                          <p className="text-[11px] text-slate-400 mt-0.5 truncate">
                             {item.description}
                           </p>
                         )}
@@ -404,7 +404,7 @@ export function CounterClient({
                       </div>
                     </div>
 
-                    <div className="mt-3 flex items-center justify-end">
+                    <div className="mt-1.5 flex items-center justify-end">
                       {qty === 0 ? (
                         <button
                           onClick={() => addItem(item)}
