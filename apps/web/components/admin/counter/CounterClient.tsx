@@ -396,7 +396,7 @@ export function CounterClient({
                     </div>
 
                     {/* ROW 2: Price & Add Button / Qty Actions (No Description) */}
-                    <div className="mt-2 flex items-center justify-between gap-2 pt-1 border-t border-slate-50">
+                    <div className="mt-0.5 flex items-center justify-between gap-2">
                       <p className="text-xs font-bold text-slate-800 shrink-0">
                         ₹{item.price.toFixed(0)}
                       </p>
