@@ -450,7 +450,7 @@ export function CounterClient({
 
       {/* ── Mobile cart sheet ─────────────────────────────────────────── */}
       <Sheet open={cartOpen} onOpenChange={setCartOpen}>
-        <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl px-0">
+        <SheetContent side="right" className="h-full w-full sm:max-w-md px-0">
           <SheetHeader className="px-5 pb-3 border-b">
             <SheetTitle className="flex items-center gap-2 text-base">
               <ShoppingCart size={18} />
@@ -458,7 +458,7 @@ export function CounterClient({
             </SheetTitle>
           </SheetHeader>
           {/* REPLACED Shadcn ScrollArea with standard HTML scroll wrapper */}
-          <div className="h-[calc(90vh-64px)] overflow-y-auto no-scrollbar">
+          <div className="h-[calc(100vh-64px)] overflow-y-auto no-scrollbar">
             <div className="px-5 py-4">
               <OrderDetailsPanel
                 cart={cart}
