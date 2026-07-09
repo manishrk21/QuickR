@@ -8,7 +8,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -22,7 +21,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import {
   Plus,
@@ -459,7 +457,8 @@ export function CounterClient({
               Counter order
             </SheetTitle>
           </SheetHeader>
-          <ScrollArea className="h-[calc(90vh-64px)]">
+          {/* REPLACED Shadcn ScrollArea with standard HTML scroll wrapper */}
+          <div className="h-[calc(90vh-64px)] overflow-y-auto no-scrollbar">
             <div className="px-5 py-4">
               <OrderDetailsPanel
                 cart={cart}
@@ -482,7 +481,7 @@ export function CounterClient({
                 onUpdateQty={updateQty}
               />
             </div>
-          </ScrollArea>
+          </div>
         </SheetContent>
       </Sheet>
     </div>
@@ -696,11 +695,12 @@ function OrderDetailsPanel({
 
         <div className="space-y-1.5">
           <Label className="text-xs text-slate-500">Note (optional)</Label>
-          <Textarea
+          {/* REPLACED Shadcn Textarea with custom styled native HTML textarea */}
+          <textarea
             placeholder="Spice level, allergies, special requests…"
             value={specialInstructions}
             onChange={(e) => setSpecialInstructions(e.target.value)}
-            className="text-sm resize-none"
+            className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-slate-200 resize-none"
             rows={2}
             maxLength={500}
           />
