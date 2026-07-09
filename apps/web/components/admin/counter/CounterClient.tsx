@@ -329,42 +329,43 @@ export function CounterClient({
             )}
           </div>
 
-          {/* Category pills */}
-          {!search && (
-            <div className="flex gap-2 overflow-x-auto pb-2 mb-4 no-scrollbar">
-              {/* "All" Option Pill */}
+          {/* Category pills — Always visible */}
+          <div className="flex gap-2 overflow-x-auto pb-2 mb-4 no-scrollbar">
+            {/* "All" Option Pill */}
+            <button
+              onClick={() => {
+                setActiveCategory("");
+                setSearch(""); // Automatically clears search context
+              }}
+              className="shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap"
+              style={
+                activeCategory === "" && !search
+                  ? { background: primary, color: "#fff" }
+                  : { background: "#f1f5f9", color: "#475569" }
+              }
+            >
+              All Items
+            </button>
+          
+            {categories.map((cat) => (
               <button
-                onClick={() => setActiveCategory("")}
+                key={cat.id}
+                onClick={() => {
+                  setActiveCategory(cat.id);
+                  setSearch(""); // Automatically clears search context
+                }}
                 className="shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap"
                 style={
-                  activeCategory === ""
+                  activeCategory === cat.id && !search
                     ? { background: primary, color: "#fff" }
                     : { background: "#f1f5f9", color: "#475569" }
                 }
               >
-                All Items
+                {cat.name}
               </button>
+            ))}
+          </div>
           
-              {categories.map((cat) => (
-          
-          //{!search && (
-            //<div className="flex gap-2 overflow-x-auto pb-2 mb-4 no-scrollbar">
-              //{categories.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => setActiveCategory(cat.id)}
-                  className="shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap"
-                  style={
-                    activeCategory === cat.id
-                      ? { background: primary, color: "#fff" }
-                      : { background: "#f1f5f9", color: "#475569" }
-                  }
-                >
-                  {cat.name}
-                </button>
-              ))}
-            </div>
-          )}
 
           {/* Menu items grid */}
           {filteredItems.length === 0 ? (
