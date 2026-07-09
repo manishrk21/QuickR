@@ -368,8 +368,16 @@ export function CounterClient({
           
 
           {/* Menu items grid */}
-          
-          {filteredItems.map((item) => {
+          {/* Menu items grid */}
+          {filteredItems.length === 0 ? (
+            <div className="border-2 border-dashed border-slate-200 rounded-xl py-12 text-center">
+              <p className="text-slate-400 text-sm">
+                {search ? `No items match "${search}"` : "No items in this category."}
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {filteredItems.map((item) => {
                 const qty = getQty(item.id);
                 return (
                   <div
@@ -448,9 +456,10 @@ export function CounterClient({
                   </div>
                 );
               })}
-         
+            </div>
+          )}
+        </div>
         
-
         {/* ── RIGHT: Order details panel (desktop sidebar) ─────────────── */}
         <div className="hidden xl:flex flex-col gap-4">
           <OrderDetailsPanel
