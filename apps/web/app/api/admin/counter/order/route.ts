@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
     items,
   } = parsed.data;
 
-  Verify admin belongs to this restaurant
+  // Verify admin belongs to this restaurant
   const { data: member } = await supabase
     .from("tenant_members")
     .select("restaurant_id")
