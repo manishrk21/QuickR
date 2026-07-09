@@ -368,6 +368,7 @@ export function CounterClient({
           
 
           {/* Menu items grid */}
+          {/* Menu items grid */}
           {filteredItems.length === 0 ? (
             <div className="border-2 border-dashed border-slate-200 rounded-xl py-12 text-center">
               <p className="text-slate-400 text-sm">
@@ -381,76 +382,83 @@ export function CounterClient({
                 return (
                   <div
                     key={item.id}
-                    className={`border rounded-xl p-2 bg-white transition-all ${
+                    className={`border rounded-lg p-2.5 bg-white transition-all ${
                       qty > 0
                         ? "border-slate-300 ring-1 ring-slate-200"
                         : "border-slate-100 hover:border-slate-200"
                     }`}
                   >
-                    <div className="flex items-start gap-2">
-                      <FoodTypeIndicator type={item.food_type} size="sm" />
-                      <div className="flex-1 min-w-0">
-                        <p className="font-medium text-sm text-slate-900 leading-tight">
+                    {/* TOP ROW: Item Name & Price side-by-side */}
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex items-center gap-1.5 min-w-0">
+                        <FoodTypeIndicator type={item.food_type} size="sm" />
+                        <p className="font-semibold text-sm text-slate-900 leading-tight truncate">
                           {item.name}
                         </p>
+                      </div>
+                      <p className="text-sm font-bold text-slate-800 shrink-0">
+                        ₹{item.price.toFixed(0)}
+                      </p>
+                    </div>
+
+                    {/* BOTTOM ROW: Description & Add Button side-by-side */}
+                    <div className="mt-2 flex items-center justify-between gap-4">
+                      <div className="min-w-0 flex-1">
                         {item.description && (
-                          <p className="text-[11px] text-slate-400 mt-0.5 truncate">
+                          <p className="text-xs text-slate-400 truncate">
                             {item.description}
                           </p>
                         )}
-                        <p className="text-sm font-semibold text-slate-800 mt-1">
-                          ₹{item.price.toFixed(0)}
-                        </p>
                       </div>
-                    </div>
 
-                    <div className="mt-1.5 flex items-center justify-end">
-                      {qty === 0 ? (
-                        <button
-                          onClick={() => addItem(item)}
-                          className="text-xs font-semibold px-4 py-1.5 rounded-lg border-2 transition-colors"
-                          style={{ borderColor: primary, color: primary }}
-                        >
-                          ADD
-                        </button>
-                      ) : (
-                        <div
-                          className="flex items-center gap-2 rounded-lg px-2 py-1"
-                          style={{ background: primary + "15" }}
-                        >
+                      <div className="shrink-0">
+                        {qty === 0 ? (
                           <button
-                            onClick={() => updateQty(item.id, qty - 1)}
-                            className="rounded transition-opacity hover:opacity-70"
-                            style={{ color: primary }}
+                            onClick={() => addItem(item)}
+                            className="text-[11px] font-bold px-3 py-1 rounded-md border transition-colors"
+                            style={{ borderColor: primary, color: primary }}
                           >
-                            {qty === 1 ? (
-                              <Trash2 size={14} />
-                            ) : (
-                              <Minus size={14} />
-                            )}
+                            ADD
                           </button>
-                          <span
-                            className="text-sm font-bold w-5 text-center"
-                            style={{ color: primary }}
+                        ) : (
+                          <div
+                            className="flex items-center gap-1.5 rounded-md px-1.5 py-0.5"
+                            style={{ background: primary + "15" }}
                           >
-                            {qty}
-                          </span>
-                          <button
-                            onClick={() => updateQty(item.id, qty + 1)}
-                            className="rounded transition-opacity hover:opacity-70"
-                            style={{ color: primary }}
-                          >
-                            <Plus size={14} />
-                          </button>
-                        </div>
-                      )}
+                            <button
+                              onClick={() => updateQty(item.id, qty - 1)}
+                              className="rounded transition-opacity hover:opacity-70"
+                              style={{ color: primary }}
+                            >
+                              {qty === 1 ? (
+                                <Trash2 size={13} />
+                              ) : (
+                                <Minus size={13} />
+                              )}
+                            </button>
+                            <span
+                              className="text-xs font-bold w-4 text-center"
+                              style={{ color: primary }}
+                            >
+                              {qty}
+                            </span>
+                            <button
+                              onClick={() => updateQty(item.id, qty + 1)}
+                              className="rounded transition-opacity hover:opacity-70"
+                              style={{ color: primary }}
+                            >
+                              <Plus size={13} />
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 );
               })}
             </div>
           )}
-        </div>
+        
 
         {/* ── RIGHT: Order details panel (desktop sidebar) ─────────────── */}
         <div className="hidden xl:flex flex-col gap-4">
