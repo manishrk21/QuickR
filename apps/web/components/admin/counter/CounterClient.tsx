@@ -105,7 +105,7 @@ export function CounterClient({
   const [specialInstructions, setSpecialInstructions] = useState("");
 
   // UI state
-  const [activeCategory, setActiveCategory] = useState(categories[0]?.id ?? "");
+  const [activeCategory, setActiveCategory] = useState("");   //useState(categories[0]?.id ?? "");
   const [search, setSearch] = useState("");
   const [placing, setPlacing] = useState(false);
   const [success, setSuccess] = useState<{ orderId: string; total: number } | null>(null);
@@ -115,13 +115,24 @@ export function CounterClient({
   const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
   const itemCount = cart.reduce((s, i) => s + i.quantity, 0);
 
+  //const filteredItems = useMemo(() => {
+  //   const base = search
+  //     ? items.filter((i) =>
+  //         i.name.toLowerCase().includes(search.toLowerCase())
+  //       )
+  //     : items.filter((i) => i.category_id === activeCategory);
+  //   return base;
+  // }, [items, search, activeCategory]);
   const filteredItems = useMemo(() => {
-    const base = search
-      ? items.filter((i) =>
-          i.name.toLowerCase().includes(search.toLowerCase())
-        )
-      : items.filter((i) => i.category_id === activeCategory);
-    return base;
+    if (search) {
+      return items.filter((i) =>
+        i.name.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+    if (activeCategory === "") {
+      return items; // Returns everything when "All" is active
+    }
+    return items.filter((i) => i.category_id === activeCategory);
   }, [items, search, activeCategory]);
 
   // Cart ops
@@ -321,7 +332,24 @@ export function CounterClient({
           {/* Category pills */}
           {!search && (
             <div className="flex gap-2 overflow-x-auto pb-2 mb-4 no-scrollbar">
+              {/* "All" Option Pill */}
+              <button
+                onClick={() => setActiveCategory("")}
+                className="shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap"
+                style={
+                  activeCategory === ""
+                    ? { background: primary, color: "#fff" }
+                    : { background: "#f1f5f9", color: "#475569" }
+                }
+              >
+                All Items
+              </button>
+          
               {categories.map((cat) => (
+          
+          //{!search && (
+            //<div className="flex gap-2 overflow-x-auto pb-2 mb-4 no-scrollbar">
+              //{categories.map((cat) => (
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
