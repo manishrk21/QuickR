@@ -381,7 +381,7 @@ export function CounterClient({
                 return (
                   <div
                     key={item.id}
-                    className={`border rounded-lg p-2 bg-white flex flex-col justify-between min-h-[90px] transition-all ${
+                    className={`border rounded-lg p-2 bg-white flex flex-col transition-all  ${
                       qty > 0
                         ? "border-slate-300 ring-1 ring-slate-200"
                         : "border-slate-100 hover:border-slate-200"
@@ -396,7 +396,7 @@ export function CounterClient({
                     </div>
 
                     {/* ROW 2: Price & Add Button / Qty Actions (No Description) */}
-                    <div className="mt-0.5 flex items-center justify-between gap-2">
+                    <div className="mt-1 flex items-center justify-between gap-2">
                       <p className="text-xs font-bold text-slate-800 shrink-0">
                         ₹{item.price.toFixed(0)}
                       </p>
