@@ -5,7 +5,7 @@
 import Link from "next/link"
 import { WaitlistForm } from "./WaitlistForm"
 import QuickrJourney from "@/components/QuickrJourney"
-
+import React from 'react';
 /* ─────────────────────────────────────────────────────────────────────────── */
 /*  Page (server component — only WaitlistForm is client)                      */
 /* ─────────────────────────────────────────────────────────────────────────── */
@@ -151,13 +151,12 @@ export default function HomePage() {
 
         </svg>
       {/* Moving Laser Scanline Overlay */}
-        <div 
           className="pointer-events-none"
           style={{
+        <div 
             position: "absolute",
             left: "50%",
             top: "50%",
-            width: "min(78vw, 780px)",
             height: "3px",
             transform: "translate(-50%, -50%)",
             background: "linear-gradient(90deg, transparent, #630102 20%, #630102 80%, transparent)",
@@ -168,6 +167,7 @@ export default function HomePage() {
         />
 
         {/* DINING watermark text
+            width: "min(78vw, 780px)",
         <span
           aria-hidden
           className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 select-none whitespace-nowrap font-bold uppercase leading-none"
@@ -244,13 +244,62 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── HOW IT WORKS (QuickR Journey animated component) ─────────────── */}
+       {/* ── HOW IT WORKS (QuickR Journey animated component) ─────────────── */}
       {/*
           This is the dark section with the animated phone + dashboard.
           QuickrJourney is the recoloured component from quickr-journey-recoloured.tsx
           placed at components/QuickrJourney.tsx
       */}
-      <QuickrJourney />
+      {/* <QuickrJourney />  */}
+      
+      <section className="w-full bg-[#111827] text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          {/* Header Section */}
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-gray-100">
+              Explore Our Live Dashboard
+            </h2>
+            <p className="mt-3 max-w-2xl mx-auto text-xl text-gray-400 sm:mt-4">
+              See real-time analytics, top items, and revenue trends in action.
+            </p>
+          </div>
+  
+          {/* Layout Grid: Stacks on mobile, Side-by-Side on desktop */}
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-center bg-[#1f2937] p-6 rounded-2xl border border-gray-700 shadow-2xl">
+            
+            {/* Left Side: Live Dashboard Image Preview */}
+            <div className="lg:col-span-3 w-full overflow-hidden rounded-xl border border-gray-600 bg-black/20 shadow-inner">
+              <img 
+                src="/Quickr/dashboard.png" 
+                alt="QuickR Dine Analytics Dashboard Live Preview" 
+                className="w-full h-auto object-cover block"
+              />
+            </div>
+  
+            {/* Right Side: QR Code Scanner Block */}
+            <div className="lg:col-span-1 w-full flex flex-col items-center justify-center p-6 bg-[#111827] rounded-xl border border-gray-700 text-center">
+              <div className="bg-white p-4 rounded-xl shadow-lg max-w-[200px] sm:max-w-[220px] lg:max-w-full">
+                <img 
+                  src="/Quickr/qr.png" 
+                  alt="Scan to try sample order" 
+                  className="w-full h-auto object-contain mx-auto"
+                />
+              </div>
+              
+              <div className="mt-4">
+                <h3 className="text-lg font-bold text-gray-100">Try it Yourself</h3>
+                <p className="mt-2 text-sm text-gray-400 leading-relaxed">
+                  Scan this QR code to place a <span className="text-indigo-400 font-semibold">sample order</span> and test the live integration.
+                </p>
+              </div>
+            </div>
+  
+          </div>
+        </div>
+      </section>
+   
+  
+
 
       {/* ── WHAT WE DO ───────────────────────────────────────────────────── */}
       <section
