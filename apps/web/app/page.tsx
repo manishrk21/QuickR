@@ -245,50 +245,52 @@ export default function HomePage() {
         </div>
       </section>
       
-
-          <section id="how-it-works" className="w-full bg-[#0d0000] text-white py-16 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-7xl mx-auto">
-              <div className="text-center mb-12">
-                <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-gray-100">
-                  Explore Our Live Dashboard
-                </h2>
-                <p className="mt-3 max-w-2xl mx-auto text-base text-gray-400">
-                  See real-time analytics, order tracking, and table performance in action.
+      <section id="how-it-works" className="w-full bg-[#0d0000] text-white py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          
+          {/* Clean Header Formatting */}
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-gray-100">
+              Explore Our Live Dashboard
+            </h2>
+            <p className="mt-3 max-w-2xl mx-auto text-base text-gray-400">
+              See real-time analytics, order tracking, and table performance in action.
+            </p>
+          </div>
+      
+          {/* Aligned Grid Layout: items-stretch forces equal container heights */}
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-stretch bg-[#111827] p-6 rounded-2xl border border-gray-800 shadow-2xl">
+            
+            {/* Left Side: Live Dashboard Image Container */}
+            <div className="lg:col-span-3 w-full flex items-center justify-center overflow-hidden rounded-xl border border-gray-700 bg-black/40 shadow-inner">
+              <img 
+                src="/Quickr/dashboard.png" 
+                alt="QuickR Dine Analytics Dashboard Live Preview" 
+                className="w-full h-auto object-contain block mx-auto"
+              />
+            </div>
+      
+            {/* Right Side: QR Code Scanner Block — Self-aligning flex column */}
+            <div className="lg:col-span-1 w-full flex flex-col items-center justify-center p-6 bg-[#0d0000] rounded-xl border border-gray-800 text-center">
+              <div className="bg-white p-4 rounded-xl shadow-lg w-full max-w-[180px] sm:max-w-[200px] lg:max-w-full aspect-square flex items-center justify-center">
+                <img 
+                  src="/Quickr/qr.png" 
+                  alt="Scan to try sample order" 
+                  className="w-full h-auto object-contain mx-auto"
+                />
+              </div>
+              
+              <div className="mt-5 w-full">
+                <h3 className="text-lg font-bold text-gray-100">Try Sample Order</h3>
+                <p className="mt-2 text-xs text-gray-400 leading-relaxed max-w-[240px] mx-auto">
+                  Scan this QR code with your mobile device to simulate a customer checkout flow.
                 </p>
               </div>
-          
-              <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-center bg-[#111827] p-6 rounded-2xl border border-gray-800 shadow-2xl">
-                {/* Left Side: Live Dashboard Image Preview */}
-                <div className="lg:col-span-3 w-full overflow-hidden rounded-xl border border-gray-700 bg-black/40 shadow-inner">
-                  <img 
-                    src="/Quickr/dashboard.png" 
-                    alt="QuickR Dine Analytics Dashboard Live Preview" 
-                    className="w-full h-auto object-cover block"
-                  />
-                </div>
-          
-                {/* Right Side: QR Code Scanner Block */}
-                <div className="lg:col-span-1 w-full flex flex-col items-center justify-center p-6 bg-[#0d0000] rounded-xl border border-gray-800 text-center">
-                  <div className="bg-white p-4 rounded-xl shadow-lg max-w-[200px] sm:max-w-[220px] lg:max-w-full">
-                    <img 
-                      src="/Quickr/qr.png" 
-                      alt="Scan to try sample order" 
-                      className="w-full h-auto object-contain mx-auto"
-                    />
-                  </div>
-                  <div className="mt-5">
-                    <h3 className="text-lg font-bold text-gray-100">Try Sample Order</h3>
-                    <p className="mt-2 text-xs text-gray-400 leading-relaxed">
-                      Scan this QR code with your mobile device to simulate a customer checkout flow.
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
-          </section>
-
-              
-
+      
+          </div>
+        </div>
+      </section>
        {/* ── HOW IT WORKS (QuickR Journey animated component) ─────────────── */}
       {/*
           This is the dark section with the animated phone + dashboard.
@@ -296,9 +298,6 @@ export default function HomePage() {
           placed at components/QuickrJourney.tsx
       */}
       {/* <QuickrJourney />  */}
- 
-     
-
     
 {/*       WHAT WE DO ───────────────────────────────────────────────────── */}
       <section
