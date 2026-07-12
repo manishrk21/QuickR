@@ -263,7 +263,7 @@ export default function HomePage() {
             {/* Left Side: Live Dashboard Image Container */}
             <div className="lg:col-span-3 w-full flex items-center justify-center overflow-hidden rounded-xl border border-gray-700 bg-black/40 shadow-inner">
               <img 
-                src="/dashboard.png" 
+                src="QuickR/img/dashboard.png" 
                 alt="QuickR Dine Analytics Dashboard Live Preview" 
                 className="w-full h-auto object-contain block mx-auto"
               />
@@ -273,7 +273,7 @@ export default function HomePage() {
             <div className="lg:col-span-1 w-full flex flex-col items-center justify-center p-6 bg-[#0d0000] rounded-xl border border-gray-800 text-center">
               <div className="bg-white p-4 rounded-xl shadow-lg w-full max-w-[180px] sm:max-w-[200px] lg:max-w-full aspect-square flex items-center justify-center">
                 <img 
-                  src="/qr.png" 
+                  src="QuickR/img/qr.png" 
                   alt="Scan to try sample order" 
                   className="w-full h-auto object-contain mx-auto"
                 />
@@ -299,50 +299,7 @@ export default function HomePage() {
           Swap /QuickR/menu.png and /QuickR/qr2.png for your actual files —
           same /public/QuickR folder as dashboard.png and qr.png above.
       */}
-      <section className="w-full bg-[#0d0000] text-white py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-gray-100">
-              This Is What Your Customers See
-            </h2>
-            <p className="mt-3 max-w-2xl mx-auto text-base text-gray-400">
-              A clean, fast menu that opens straight in the browser — no app, no download.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-stretch bg-[#111827] p-6 rounded-2xl border border-gray-800 shadow-2xl">
-
-            {/* Left Side: Menu / Ordering Screenshot */}
-            <div className="lg:col-span-3 w-full flex items-center justify-center overflow-hidden rounded-xl border border-gray-700 bg-black/40 shadow-inner">
-              <img
-                src="/dashboard.png"
-                alt="QuickR digital menu and ordering screen"
-                className="w-full h-auto object-contain block mx-auto"
-              />
-            </div>
-
-            {/* Right Side: QR Code — scan to order */}
-            <div className="lg:col-span-1 w-full flex flex-col items-center justify-center p-6 bg-[#0d0000] rounded-xl border border-gray-800 text-center">
-              <div className="bg-white p-4 rounded-xl shadow-lg w-full max-w-[180px] sm:max-w-[200px] lg:max-w-full aspect-square flex items-center justify-center">
-                <img
-                  src="/qr.png"
-                  alt="Scan to order from the menu"
-                  className="w-full h-auto object-contain mx-auto"
-                />
-              </div>
-
-              <div className="mt-5 w-full">
-                <h3 className="text-lg font-bold text-gray-100">Scan to Order</h3>
-                <p className="mt-2 text-xs text-gray-400 leading-relaxed max-w-[240px] mx-auto">
-                  Scan this QR code to open the live menu and place a sample order, just like a customer at the table.
-                </p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
+    
     
 {/*       WHAT WE DO ───────────────────────────────────────────────────── */}
       <section
