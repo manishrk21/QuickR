@@ -428,85 +428,100 @@ export default function HomePage() {
       </section>
 
       {/* ── ABOUT + CONTACT ──────────────────────────────────────────────── */}
-      <section
-        id="about"
-        className="px-6 py-16 sm:px-10"
-        style={{
-          background: "#0d0000",
-          color: "#EDEBDE",
-        }}
-      >
-        <div className="mx-auto max-w-5xl grid gap-12 sm:grid-cols-2">
-          {/* About */}
-          <div>
-            <p
-              className="mb-4 text-xs font-semibold uppercase tracking-[0.25em]"
-              style={{ color: "#EDEBDE", opacity: 0.4 }}
-            >
-              About
+      {/* ── ABOUT + CONTACT ──────────────────────────────────────────────── */}
+      <section id="about" className="bg-[#0d0000] text-[#EDEBDE] px-6 py-20 sm:px-12 lg:px-16" >
+        <div className="mx-auto max-w-6xl grid gap-12 md:grid-cols-3 lg:gap-16">
+          
+          {/* Column 1: Brand & Hook */}
+          <div className="space-y-4">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#EDEBDE]/40">
+              The Platform
             </p>
-            <p className="text-sm leading-relaxed" style={{ color: "rgba(237,235,222,0.7)" }}>
-              QuickR is a contactless ordering platform built for Indian
-              restaurants and cafes.  QuickR gives cafes and restaurants a QR-based digital ordering system.
-              Customers scan, browse, and order — you see every order live on your
-              dashboard without any app.
-            
-            </p>
-            <p className="mt-4 text-sm leading-relaxed" style={{ color: "rgba(237,235,222,0.5)" }}>
-              Built by MRK_21 with ❤️ for the Indian cafes/restaurants .
+            <h3 className="text-2xl font-bold tracking-tight text-[#EDEBDE]">
+              QuickR
+            </h3>
+            <p className="text-sm text-[#EDEBDE]/60 leading-relaxed">
+              Built by MRK_21 with ❤️ for Indian cafes and restaurants.
             </p>
           </div>
-
-          {/* Contact */}
-          <div>
-            <p
-              className="mb-4 text-xs font-semibold uppercase tracking-[0.25em]"
-              style={{ color: "#EDEBDE", opacity: 0.4 }}
-            >
-              Contact
+      
+          {/* Column 2: About Pitch */}
+          <div className="space-y-4 md:col-span-1">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#EDEBDE]/40">
+              About Us
             </p>
-            <p className="text-sm" style={{ color: "rgba(237,235,222,0.7)" }}>
-              <span style={{ color: "rgba(237,235,222,0.4)" }}>Email </span>
-              <a
-                href="mailto:hello@quickr.in"
-                className="underline underline-offset-4 transition-opacity hover:opacity-80"
-                style={{ color: "#EDEBDE" }}
-              >
-                mrk21creates@gmail.com {/* ← replace with your email */}
-              </a>
+            <p className="text-base text-[#EDEBDE]/80 leading-relaxed">
+              QuickR is a premium contactless ordering platform built for modern Indian hospitality. We provide a seamless, QR-based digital ecosystem. Customers scan, browse, and order instantly—while you manage everything live from your dashboard without requiring any app downloads.
             </p>
-            <p className="mt-6 text-sm" style={{ color: "rgba(237,235,222,0.4)" }}>
-              Social media — coming soon
-            </p>
-            <div className="mt-8 flex gap-5 text-xs" style={{ color: "rgba(237,235,222,0.4)" }}>
-              <Link href="/privacy" className="hover:text-[#EDEBDE] transition-colors">
-                Privacy Policy
-              </Link>
-              <span>Terms — coming soon</span>
+          </div>
+      
+          {/* Column 3: Contact & Legal */}
+          <div className="space-y-6">
+            <div>
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.25em] text-[#EDEBDE]/40">
+                Get in Touch
+              </p>
+              <p className="text-base text-[#EDEBDE]/60">
+                Email:{' '}
+                <a 
+                  href="mailto:mrk21creates@gmail.com" 
+                  className="text-[#EDEBDE] font-medium underline underline-offset-4 transition-colors hover:text-[#EDEBDE]/80"
+                >
+                  mrk21creates@gmail.com
+                </a>
+              </p>
+            </div>
+      
+            <div className="pt-4 border-t border-[#EDEBDE]/10 space-y-3">
+              <p className="text-xs text-[#EDEBDE]/40 tracking-wide">
+                Social media — coming soon
+              </p>
+              <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs text-[#EDEBDE]/50">
+                <Link href="/privacy" className="hover:text-[#EDEBDE] transition-colors underline underline-offset-4">
+                  Privacy Policy
+                </Link>
+                <span className="cursor-not-allowed">Terms of Service</span>
+              </div>
             </div>
           </div>
+      
         </div>
       </section>
 
+    
+
       {/* ── FOOTER ───────────────────────────────────────────────────────── */}
-      <footer
-        className="px-6 py-6 sm:px-10"
-        style={{
-          background: "#0d0000",
-          borderTop: "1px solid rgba(237,235,222,0.06)",
-        }}
-      >
-        <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 flex-wrap">
-          <span className="text-sm font-bold" style={{ color: "#EDEBDE", opacity: 0.6 }}>
-            Quick<span style={{ color: "#630102" }}>R</span>
-          </span>
-          <p className="text-xs" style={{ color: "rgba(237,235,222,0.3)" }}>
-            © {new Date().getFullYear()} QuickR. All rights reserved.
-          </p>
-          <div className="flex gap-5 text-xs" style={{ color: "rgba(237,235,222,0.4)" }}>
-            <Link href="/admin/login" className="hover:text-[#EDEBDE] transition-colors">Admin login</Link>
-            <Link href="/privacy" className="hover:text-[#EDEBDE] transition-colors">Privacy</Link>
+      <footer className="bg-[#0d0000] border-t border-[#EDEBDE]/10 px-6 py-8 sm:px-12 lg:px-16">
+        <div className="mx-auto flex max-w-6xl flex-col sm:flex-row items-center justify-between gap-6">
+          
+          {/* Logo Block */}
+          <div className="flex items-center gap-2">
+            <span className="text-xl font-black tracking-tight text-[#EDEBDE]">
+              Quick<span className="text-[#FF453A]">R</span> {/* Changed from muddy brown #630102 to an energetic, visible red */}
+            </span>
           </div>
+      
+          {/* Copyright text */}
+          <p className="text-sm text-[#EDEBDE]/50 text-center sm:text-left order-3 sm:order-none">
+            &copy; {new Date().getFullYear()} QuickR. All rights reserved.
+          </p>
+      
+          {/* Quick Navigation Links */}
+          <div className="flex items-center gap-6 text-sm font-medium text-[#EDEBDE]/60">
+            <Link 
+              href="/admin/login" 
+              className="hover:text-[#EDEBDE] underline underline-offset-4 transition-colors"
+            >
+              Admin Login
+            </Link>
+            <Link 
+              href="/privacy" 
+              className="hover:text-[#EDEBDE] underline underline-offset-4 transition-colors"
+            >
+              Privacy Policy
+            </Link>
+          </div>
+      
         </div>
       </footer>
     </div>
