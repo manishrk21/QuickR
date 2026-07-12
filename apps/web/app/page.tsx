@@ -251,7 +251,9 @@ export default function HomePage() {
           placed at components/QuickrJourney.tsx
       */}
       {/* <QuickrJourney />  */}
-      
+  
+
+
       <section className="w-full bg-[#111827] text-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Header Section */}
@@ -298,10 +300,7 @@ export default function HomePage() {
         </div>
       </section>
    
-  
-
-
-      {/* ── WHAT WE DO ───────────────────────────────────────────────────── */}
+{/* ── WHAT WE DO ───────────────────────────────────────────────────── */}
       <section
         id="what-we-do"
         className="px-6 py-20 sm:px-10 sm:py-28"
