@@ -263,7 +263,7 @@ export default function HomePage() {
             {/* Left Side: Live Dashboard Image Container */}
             <div className="lg:col-span-3 w-full flex items-center justify-center overflow-hidden rounded-xl border border-gray-700 bg-black/40 shadow-inner">
               <img 
-                src="/QuickR/dashboard.png" 
+                src="/dashboard.png" 
                 alt="QuickR Dine Analytics Dashboard Live Preview" 
                 className="w-full h-auto object-contain block mx-auto"
               />
@@ -273,7 +273,7 @@ export default function HomePage() {
             <div className="lg:col-span-1 w-full flex flex-col items-center justify-center p-6 bg-[#0d0000] rounded-xl border border-gray-800 text-center">
               <div className="bg-white p-4 rounded-xl shadow-lg w-full max-w-[180px] sm:max-w-[200px] lg:max-w-full aspect-square flex items-center justify-center">
                 <img 
-                  src="/QuickR/qr.png" 
+                  src="/qr.png" 
                   alt="Scan to try sample order" 
                   className="w-full h-auto object-contain mx-auto"
                 />
@@ -316,7 +316,7 @@ export default function HomePage() {
             {/* Left Side: Menu / Ordering Screenshot */}
             <div className="lg:col-span-3 w-full flex items-center justify-center overflow-hidden rounded-xl border border-gray-700 bg-black/40 shadow-inner">
               <img
-                src="/QuickR/dashboard.png"
+                src="/dashboard.png"
                 alt="QuickR digital menu and ordering screen"
                 className="w-full h-auto object-contain block mx-auto"
               />
@@ -326,7 +326,7 @@ export default function HomePage() {
             <div className="lg:col-span-1 w-full flex flex-col items-center justify-center p-6 bg-[#0d0000] rounded-xl border border-gray-800 text-center">
               <div className="bg-white p-4 rounded-xl shadow-lg w-full max-w-[180px] sm:max-w-[200px] lg:max-w-full aspect-square flex items-center justify-center">
                 <img
-                  src="/QuickR/qr.png"
+                  src="/qr.png"
                   alt="Scan to order from the menu"
                   className="w-full h-auto object-contain mx-auto"
                 />
