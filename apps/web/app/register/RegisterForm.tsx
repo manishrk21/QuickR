@@ -58,72 +58,115 @@ export function RegisterForm() {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   }
-
+  
+ 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!validate()) return;
-
+  
     setLoading(true);
     setGlobalError("");
-
-    const slug = slugify(form.cafe_name);
-
-    // Sign up with Supabase Auth
-    // We store registration data in user_metadata so the callback API can use it
-    const { data, error } = await supabase.auth.signUp({
-      email: form.email,
-      password: form.password,
-      options: {
-        emailRedirectTo: `${window.location.origin}/api/auth/complete-registration`,
-        data: {
-          cafe_name:  form.cafe_name.trim(),
-          owner_name: form.owner_name.trim(),
-          mobile:     form.mobile,
-          slug:       slug,
-          role:       "restaurant_owner",
-        },
-      },
+  
+    const res = await fetch("/api/auth/register-restaurant", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        cafe_name:  form.cafe_name.trim(),
+        owner_name: form.owner_name.trim(),
+        mobile:     form.mobile,
+        email:      form.email,
+        password:   form.password,
+      }),
     });
-
-    if (error) {
-      if (error.message.includes("already registered")) {
-        setGlobalError("An account with this email already exists. Sign in instead.");
-      } else {
-        setGlobalError(error.message);
-      }
+  
+    const data = await res.json();
+  
+    if (!res.ok) {
+      setGlobalError(data.error ?? "Something went wrong. Please try again.");
       setLoading(false);
       return;
     }
-    
-    if (data.session) {
-  // Email confirmation is OFF — user is immediately active
-  // Trigger restaurant creation directly then redirect to dashboard
-      const res = await fetch("/api/auth/complete-registration-direct", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          cafe_name:  form.cafe_name.trim(),
-          owner_name: form.owner_name.trim(),
-          mobile:     form.mobile,
-          slug:       slugify(form.cafe_name),
-        }),
-      });
-    
-      const result = await res.json();
-      if (result.slug) {
-        router.push(`/admin/${result.slug}`);
-      } else {
-        setGlobalError(result.error ?? "Setup failed. Please contact support.");
-        setLoading(false);
-      }
-    } else if (data.user) {
-      // Email confirmation is ON — send to verify page
-      router.push(`/register/verify?email=${encodeURIComponent(form.email)}`);
+  
+    // Sign them in client-side using the credentials they just set
+    const supabase = createClient();
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email:    form.email,
+      password: form.password,
+    });
+  
+    if (signInError) {
+      setGlobalError("Account created but sign-in failed. Please go to the login page.");
+      setLoading(false);
+      return;
     }
-  }
+  
+    router.push(`/admin/${data.slug}`);
+  }  
+  // async function handleSubmit(e: React.FormEvent) {
+  //   e.preventDefault();
+  //   if (!validate()) return;
 
-  const inputClass = (field: string) =>
-    `w-full ${errors[field] ? "border-red-400 focus:border-red-400" : ""}`;
+  //   setLoading(true);
+  //   setGlobalError("");
+
+  //   const slug = slugify(form.cafe_name);
+
+  //   // Sign up with Supabase Auth
+  //   // We store registration data in user_metadata so the callback API can use it
+  //   const { data, error } = await supabase.auth.signUp({
+  //     email: form.email,
+  //     password: form.password,
+  //     options: {
+  //       emailRedirectTo: `${window.location.origin}/api/auth/complete-registration`,
+  //       data: {
+  //         cafe_name:  form.cafe_name.trim(),
+  //         owner_name: form.owner_name.trim(),
+  //         mobile:     form.mobile,
+  //         slug:       slug,
+  //         role:       "restaurant_owner",
+  //       },
+  //     },
+  //   });
+
+  //   if (error) {
+  //     if (error.message.includes("already registered")) {
+  //       setGlobalError("An account with this email already exists. Sign in instead.");
+  //     } else {
+  //       setGlobalError(error.message);
+  //     }
+  //     setLoading(false);
+  //     return;
+  //   }
+    
+  //   if (data.session) {
+  // // Email confirmation is OFF — user is immediately active
+  // // Trigger restaurant creation directly then redirect to dashboard
+  //     const res = await fetch("/api/auth/complete-registration-direct", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         cafe_name:  form.cafe_name.trim(),
+  //         owner_name: form.owner_name.trim(),
+  //         mobile:     form.mobile,
+  //         slug:       slugify(form.cafe_name),
+  //       }),
+  //     });
+    
+  //     const result = await res.json();
+  //     if (result.slug) {
+  //       router.push(`/admin/${result.slug}`);
+  //     } else {
+  //       setGlobalError(result.error ?? "Setup failed. Please contact support.");
+  //       setLoading(false);
+  //     }
+  //   } else if (data.user) {
+  //     // Email confirmation is ON — send to verify page
+  //     router.push(`/register/verify?email=${encodeURIComponent(form.email)}`);
+  //   }
+  // }
+
+  // const inputClass = (field: string) =>
+  //   `w-full ${errors[field] ? "border-red-400 focus:border-red-400" : ""}`;
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5" noValidate>
