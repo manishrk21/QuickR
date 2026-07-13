@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
+// import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -137,7 +137,8 @@ export function RestaurantDetailDrawer({
           </div>
         </SheetHeader>
 
-        <ScrollArea className="h-[calc(100vh-80px)]">
+        
+        <div className="h-[calc(100vh-8rem)] overflow-y-auto">  
           <div className="px-6 py-5 space-y-6">
 
             {/* Active toggle */}
@@ -317,7 +318,7 @@ export function RestaurantDetailDrawer({
             </div>
 
           </div>
-        </ScrollArea>
+        </div> 
       </SheetContent>
     </Sheet>
   );
