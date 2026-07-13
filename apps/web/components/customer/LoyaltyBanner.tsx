@@ -9,7 +9,8 @@ interface LoyaltyBannerProps {
   hasReward?: boolean;
 }
 
-export default function LoyaltyBanner({ 
+// Fixed to a named export to resolve the compilation failure
+export function LoyaltyBanner({ 
   visitCount = 0, 
   target = 5, 
   primaryColor = "#630102", 
