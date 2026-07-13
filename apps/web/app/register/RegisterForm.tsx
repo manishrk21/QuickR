@@ -165,8 +165,8 @@ export function RegisterForm() {
   //   }
   // }
 
-  // const inputClass = (field: string) =>
-  //   `w-full ${errors[field] ? "border-red-400 focus:border-red-400" : ""}`;
+  const inputClass = (field: string) =>
+    `w-full ${errors[field] ? "border-red-400 focus:border-red-400" : ""}`;
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5" noValidate>
