@@ -18,7 +18,7 @@ export default function AdminLoginPage() {
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
-    loading(true);
+    setLoading(true);
     setError("");
 
     const { data, error: authError } = await supabase.auth.signInWithPassword({
@@ -168,7 +168,6 @@ export default function AdminLoginPage() {
               </Button>
             </form>
 
-            {/* ADDED HERE: Right below the closing form tag, inside the white card */}
             <p className="mt-6 text-center text-xs text-slate-500">
               Don't have an account?{" "}
               <a
@@ -199,17 +198,6 @@ export default function AdminLoginPage() {
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 // "use client";
