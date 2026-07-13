@@ -39,7 +39,19 @@ export default function AdminLoginPage() {
       .select("restaurant_id, must_change_password, restaurants(slug)")
       .eq("user_id", data.user.id)
       .single();
-
+    
+    // Check if superadmin
+    const { data: superadminRow } = await supabase
+      .from("superadmins")
+      .select("user_id")
+      .eq("user_id", data.user.id)
+      .single();
+    
+    if (superadminRow) {
+      router.push("/superadmin");
+      return;
+    }
+    
     if (!member) {
       setError("No restaurant enterprise profile linked. Please contact your administrator.");
       setLoading(false);
