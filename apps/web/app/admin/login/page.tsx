@@ -167,6 +167,17 @@ export default function AdminLoginPage() {
                 )}
               </Button>
             </form>
+            // Add at the bottom of the white card, below the form:
+              <p className="mt-6 text-center text-xs text-slate-500">
+                Don't have an account?{" "}
+                <a
+                  href="/register"
+                  className="font-medium underline underline-offset-4"
+                  style={{ color: "#630102" }}
+                >
+                  List your restaurant
+                </a>
+              </p>  
           </div>
 
           {/* Actionable Support Footer */}
