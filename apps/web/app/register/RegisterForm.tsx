@@ -94,9 +94,30 @@ export function RegisterForm() {
       setLoading(false);
       return;
     }
-
-    if (data.user) {
-      // Redirect to "check your email" page
+    
+    if (data.session) {
+  // Email confirmation is OFF — user is immediately active
+  // Trigger restaurant creation directly then redirect to dashboard
+      const res = await fetch("/api/auth/complete-registration-direct", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          cafe_name:  form.cafe_name.trim(),
+          owner_name: form.owner_name.trim(),
+          mobile:     form.mobile,
+          slug:       slugify(form.cafe_name),
+        }),
+      });
+    
+      const result = await res.json();
+      if (result.slug) {
+        router.push(`/admin/${result.slug}`);
+      } else {
+        setGlobalError(result.error ?? "Setup failed. Please contact support.");
+        setLoading(false);
+      }
+    } else if (data.user) {
+      // Email confirmation is ON — send to verify page
       router.push(`/register/verify?email=${encodeURIComponent(form.email)}`);
     }
   }
