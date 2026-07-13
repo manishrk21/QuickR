@@ -9,7 +9,6 @@ interface LoyaltyBannerProps {
   hasReward?: boolean;
 }
 
-// Fixed to a named export to resolve the compilation failure
 export function LoyaltyBanner({ 
   visitCount = 0, 
   target = 5, 
@@ -19,12 +18,12 @@ export function LoyaltyBanner({
   const filled = Number(visitCount || 0);
   const total = Number(target || 0) || 5;
 
-  // Real vector Ice Cream graphics with dynamic fillings and modern shading
+  // Highly compact vector Ice Cream graphics scaled down to fit one line on mobile
   const IceCreamIcon = ({ isFilled, isLast }: { isFilled: boolean; isLast: boolean }) => (
-    <div className="relative flex flex-col items-center group">
+    <div className="relative flex flex-col items-center">
       <svg 
-        className={`w-10 h-12 transition-all duration-500 transform ${
-          isFilled ? "scale-100 filter drop-shadow-[0_4px_8px_rgba(255,255,255,0.15)]" : "scale-95 opacity-35"
+        className={`w-7 h-8 transition-all duration-500 transform ${
+          isFilled ? "scale-100 filter drop-shadow-[0_2px_4px_rgba(255,255,255,0.1)]" : "scale-95 opacity-30"
         }`} 
         viewBox="0 0 24 30" 
         fill="none" 
@@ -36,12 +35,11 @@ export function LoyaltyBanner({
           d="M6 14L12 28L18 14H6Z" 
           fill={isFilled ? "#E5A96A" : "none"} 
           stroke={isFilled ? "#C68B45" : "#FFFFFF"} 
-          strokeWidth="1.5"
+          strokeWidth="1.75"
           strokeLinejoin="round"
         />
         {isFilled && (
-          /* Texture lines on the filled cone */
-          <path d="M9 14L13.5 24.5 M12 14L15 21 M15 14L12 21 M7.5 17.5L10.5 14" stroke="#C68B45" strokeWidth="1" />
+          <path d="M10 14L13.5 22 M14 14L12 19" stroke="#C68B45" strokeWidth="1" />
         )}
 
         {/* Ice Cream Creamy Scoops */}
@@ -49,20 +47,20 @@ export function LoyaltyBanner({
           d="M5 14C4 14 3 13 3 11.5C3 10 4.5 9 6 9C5.5 8 6 6.5 7.5 5.5C9 4.5 11 4 12 4C13 4 15 4.5 16.5 5.5C18 6.5 18.5 8 18 9C19.5 9 21 10 21 11.5C21 13 20 14 19 14H5Z" 
           fill={isFilled ? (isLast ? "#FF8B94" : "#FFD3B6") : "none"} 
           stroke={isFilled ? (isLast ? "#E05A65" : "#E2A781") : "#FFFFFF"} 
-          strokeWidth="1.5"
+          strokeWidth="1.75"
           strokeLinejoin="round"
         />
 
-        {/* Cherry on Top for the absolute ultimate prize */}
+        {/* Cherry Component */}
         {isLast && isFilled && (
           <circle cx="12" cy="2" r="1.5" fill="#D62828" />
         )}
       </svg>
       
-      {/* Visual Indicator Line underneath each completed treat */}
+      {/* Micro indicator node */}
       <div 
-        className={`h-1 w-4 rounded-full mt-2 transition-all duration-500 ${
-          isFilled ? "bg-white opacity-100" : "bg-white/0"
+        className={`h-0.5 w-2 rounded-full mt-1 transition-all duration-500 ${
+          isFilled ? "bg-white opacity-80" : "bg-white/0"
         }`} 
       />
     </div>
@@ -70,19 +68,18 @@ export function LoyaltyBanner({
 
   return (
     <div 
-      className="m-4 rounded-2xl p-6 text-white relative overflow-hidden border border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.08)] bg-gradient-to-br"
+      className="m-3 rounded-xl p-3 text-white relative overflow-hidden border border-white/10 shadow-sm bg-gradient-to-br"
       style={{ 
         backgroundColor: primaryColor,
-        backgroundImage: `linear-gradient(135deg, ${primaryColor} 0%, rgba(0,0,0,0.15) 100%)`
+        backgroundImage: `linear-gradient(135deg, ${primaryColor} 0%, rgba(0,0,0,0.12) 100%)`
       }}
     >
-      {/* Premium ambient luxury overlay grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px)] bg-[size:40px] opacity-40 pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px)] bg-[size:30px] opacity-25 pointer-events-none" />
 
-      <div className="relative z-10 flex flex-col items-center text-center space-y-5">
+      <div className="relative z-10 flex flex-col items-center text-center space-y-2.5">
         
-        {/* Beautiful Interactive Array Layer */}
-        <div className="flex flex-wrap items-center justify-center gap-4 py-2 px-4 bg-white/5 rounded-2xl border border-white/5 backdrop-blur-md w-full max-w-sm">
+        {/* Compressed Row Container - Prevents breaking onto line two */}
+        <div className="flex items-center justify-center gap-2.5 py-1 px-3 bg-white/5 rounded-xl border border-white/5 backdrop-blur-sm w-full max-w-[280px]">
           {Array.from({ length: total }).map((_, i) => (
             <IceCreamIcon 
               key={i} 
@@ -92,14 +89,14 @@ export function LoyaltyBanner({
           ))}
         </div>
 
-        {/* Clean, direct status narrative display */}
-        <div className="space-y-1">
+        {/* Ultra-tight typography layout with minimal margins */}
+        <div>
           {hasReward || filled >= total ? (
-            <p className="text-base font-serif tracking-wide text-white animate-pulse">
+            <p className="text-xs font-serif tracking-wide text-white font-medium animate-pulse">
               Receive your treat on this visit!
             </p>
           ) : (
-            <p className="text-sm font-light tracking-widest uppercase text-white/90">
+            <p className="text-[10px] font-light tracking-widest uppercase text-white/80">
               Receive a retreat on visit {total}
             </p>
           )}
@@ -109,8 +106,6 @@ export function LoyaltyBanner({
     </div>
   );
 }
-
-
 
 // "use client";
 
